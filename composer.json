@@ -11,7 +11,8 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "jeroennoten/laravel-adminlte": "^3.11"
+        "jeroennoten/laravel-adminlte": "^3.11",
+        "spatie/laravel-medialibrary": "^9.12"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
