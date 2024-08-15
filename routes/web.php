@@ -30,5 +30,8 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::resource('users', UserController::class);
+    
     Route::resource('roles', RoleController::class);
+
+    Route::post('/users/{user}/updateRole', [UserController::class, 'updateRole'])->name('users.updateRole');
 });

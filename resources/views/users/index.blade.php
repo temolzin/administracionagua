@@ -65,9 +65,9 @@
                                                 <button type="button" class="btn btn-danger mr-2" data-toggle="modal" title="Eliminar Registro"  data-target="#delete{{$user->id}}">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
-                                                <a type="button" class="permiso btn btn-secondary mr-2" title="Asignar Rol" href="{{ route('users.edit', $user->id) }}">
+                                                <a type="button" class="permiso btn btn-secondary mr-2" title="Asignar Rol" href="{{ route('users.edit', Crypt::encrypt($user->id)) }}">
                                                     <i class="fa fa-key"></i>
-                                                </a>
+                                                </a>                                                
                                             </td>
                                             @include('users.edit')
                                             @include('users.delete')
