@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Crypt;
 
 
 class UserController extends Controller
@@ -61,5 +62,20 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('users.index')->with('error', 'Hubo un problema al eliminar el usuario.');
         }
+    }
+
+    public function edit($encryptedUserId)
+    {
+        $userId = Crypt::decrypt($encryptedUserId);
+        $user = User::findOrFail($userId);
+        $roles = Role::all();
+        return view('users.assignRole', compact('user', 'roles'));
+    }
+    
+
+    public function updateRole(Request $request, User $user)
+    {
+        $user->roles()->sync($request->roles);
+        return redirect()->route('users.index')->with('success', 'Roles asignados correctamente');
     }
 }
