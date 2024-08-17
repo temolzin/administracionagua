@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Admin')
+@section('title', 'Usuarios')
 @section('content')
 <section class="content">
     <div class="right_col" role="main">
@@ -27,7 +27,6 @@
                                             <th>ID</th>
                                             <th>FOTO</th>
                                             <th>NOMBRE</th>
-                                            <th>APELLIDO </th>
                                             <th>TELEFONO</th>
                                             <th>EMAIL</th>
                                             <th>OPCIONES</th>
@@ -51,8 +50,7 @@
                                                 <img src="{{ asset('img/userDefault.png') }}"
                                                     style="width: 50px; height: 50px; border-radius: 50%;">
                                             @endif</td>
-                                            <td>{{$user->name}}</td>
-                                            <td>{{$user->last_name}}</td>
+                                            <td>{{$user->name}} {{$user->last_name}}</td>
                                             <td>{{$user->phone}}</td>
                                             <td>{{$user->email}}</td>
                                             <td>
@@ -69,11 +67,10 @@
                                                     <i class="fa fa-key"></i>
                                                 </a>                                                
                                             </td>
-                                            @include('users.edit')
-                                            @include('users.delete')
-                                            @include('users.show')
                                         </tr>
-                                        
+                                        @include('users.edit')
+                                        @include('users.delete')
+                                        @include('users.show')
                                         @endforeach
                                         @endif
                                     </tbody>

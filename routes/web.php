@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,14 +25,20 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
+Route::get('customers/pdfCustomers', [CustomerController::class, 'pdfCustomers'])->name('customers.pdfCustomers');
+
+
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::resource('users', UserController::class);
+
+    Route::resource('customers', CustomerController::class);
     
     Route::resource('roles', RoleController::class);
-
+ 
     Route::post('/users/{user}/updateRole', [UserController::class, 'updateRole'])->name('users.updateRole');
 });
