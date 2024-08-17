@@ -327,11 +327,6 @@ return [
             'icon' => 'fas fa-fw fa-user-shield'
         ],
         [
-            'text' => 'Permisos',
-            'url' => '/permission',
-            'icon' => 'fas fa-fw fa-key'
-        ],
-        [
             'text' => 'Clientes',
             'url' => '/customers',
             'icon' => 'fas fa-fw fa-users',
