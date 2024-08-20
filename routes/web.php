@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,5 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::resource('roles', RoleController::class);
  
+    Route::resource('costs', CostController::class);
+    
     Route::post('/users/{user}/updateRole', [UserController::class, 'updateRole'])->name('users.updateRole');
 });

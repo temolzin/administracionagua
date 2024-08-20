@@ -341,6 +341,11 @@ return [
             'url' => '/debts',
             'icon' => 'fas fa-fw fa-credit-card',
         ],
+        [
+            'text' => 'Costos',
+            'url' => '/costs',
+            'icon' => 'fas fa-fw fa-money-bill-wave',
+        ],
     ],
     /*
     |--------------------------------------------------------------------------

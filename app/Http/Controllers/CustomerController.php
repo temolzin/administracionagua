@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Cost;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -11,7 +12,8 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = Customer::all();
-        return view('customers.index', compact('customers'));
+        $costs = Cost::all();
+        return view('customers.index', compact('customers', 'costs'));
     }
 
     public function store(Request $request)
@@ -35,13 +37,13 @@ class CustomerController extends Controller
             $customer->partner_name = $request->input('partnerNameUpdate');
             $customer->has_water_connection = $request->input('hasWaterConnectionUpdate');
             $customer->has_store = $request->input('hasStoreUpdate');
-            $customer->connection_holder = $request->input('connectionHolderUpdate');
             $customer->has_all_payments = $request->input('hasAllPaymentsUpdate');
             $customer->has_water_day_night = $request->input('hasWaterDayNightUpdate');
             $customer->occupants_number = $request->input('occupantsNumberUpdate');
             $customer->water_days = $request->input('waterDaysUpdate');
             $customer->has_water_pressure = $request->input('hasWaterPressureUpdate');
             $customer->has_cistern = $request->input('hasCisternUpdate');
+            $customer->cost_id = $request->input('costIdUpdate');
 
             $customer->save();
 

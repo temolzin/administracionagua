@@ -90,13 +90,7 @@
                                                 <option value="0" {{ old('has_store') == '0' ? 'selected' : '' }}>No</option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="connection_holder" class="form-label">Titular de la Toma</label>
-                                            <input type="text" class="form-control" id="connection_holder" name="connection_holder" placeholder="Ingresa titular de la conexión" value="{{ old('connection_holder') }}" />
-                                        </div>
-                                    </div>                                   
+                                    </div>                                  
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="has_all_payments" class="form-label">¿Está al día?</label>
@@ -149,7 +143,20 @@
                                                 <option value="0" {{ old('has_cistern') === '0' ? 'selected' : '' }}>No</option>
                                             </select>
                                         </div>
-                                    </div>                                    
+                                    </div>  
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="cost" class="form-label">Costo</label>
+                                            <select class="form-control" name="cost_id" id="cost" required>
+                                                <option value="">Selecciona el costo</option>
+                                                @foreach ($costs as $cost)
+                                                    <option value="{{ $cost->id }}" {{ old('cost_id') == $cost->id ? 'selected' : '' }}>
+                                                        {{ $cost->category }} - {{ $cost->price }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>                                                                   
                                 </div>
                             </div>
                         </div>

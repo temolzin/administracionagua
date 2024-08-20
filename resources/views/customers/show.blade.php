@@ -64,12 +64,6 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label>Nombre del Titular de Conexión</label>
-                                        <input type="text" disabled class="form-control" value="{{ $customer->connection_holder }}" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
                                         <label>¿Tiene Local?</label>
                                         <input type="text" disabled class="form-control" value="{{ $customer->has_store ? 'Sí' : 'No' }}" />
                                     </div>
@@ -86,7 +80,7 @@
                                         <input type="text" disabled class="form-control" value="{{ $customer->has_water_day_night ? 'Sí' : 'No' }}" />
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Número de Ocupantes</label>
                                         <input type="text" disabled class="form-control" value="{{ $customer->occupants_number }}" />
@@ -104,10 +98,16 @@
                                         <input type="text" disabled class="form-control" value="{{ $customer->has_water_pressure ? 'Sí' : 'No' }}" />
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>¿Tiene Cisterna?</label>
                                         <input type="text" disabled class="form-control" value="{{ $customer->has_cistern ? 'Sí' : 'No' }}" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Costo</label>
+                                        <input type="text" disabled class="form-control" value="{{ $customer->cost->category }} - {{ $customer->cost->price }}" />
                                     </div>
                                 </div>
                             </div>

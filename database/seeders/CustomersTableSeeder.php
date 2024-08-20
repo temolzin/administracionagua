@@ -17,8 +17,11 @@ class CustomersTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
+        $costIds = DB::table('costs')->pluck('id')->toArray();
+
         foreach (range(1, 10) as $index) {
             DB::table('customers')->insert([
+                'cost_id' => $faker->randomElement($costIds),
                 'name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'block' => $faker->word,
@@ -28,15 +31,12 @@ class CustomersTableSeeder extends Seeder
                 'partner_name' => $faker->optional()->name,
                 'has_water_connection' => $faker->boolean,
                 'has_store' => $faker->boolean,
-                'connection_holder' => $faker->name,
                 'has_all_payments' => $faker->boolean,
                 'has_water_day_night' => $faker->boolean,
                 'occupants_number' => $faker->numberBetween(1, 10),
                 'water_days' => $faker->numberBetween(1, 7),
                 'has_water_pressure' => $faker->boolean,
                 'has_cistern' => $faker->boolean,
-                'created_at' => now(),
-                'updated_at' => now(),
             ]);
         }
     }

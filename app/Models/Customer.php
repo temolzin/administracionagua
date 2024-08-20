@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Cost;
 
 class Customer extends Model
 {
@@ -24,12 +25,19 @@ class Customer extends Model
         'partner_name',
         'has_water_connection',
         'has_store',
-        'connection_holder',
         'has_all_payments',
         'has_water_day_night',
         'occupants_number',
         'water_days',
         'has_water_pressure',
         'has_cistern',
+        'cost_id',
     ];
+
+    public $timestamps = false;
+
+    public function Cost()
+    {
+        return $this->belongsTo(Cost::class);
+    }
 }

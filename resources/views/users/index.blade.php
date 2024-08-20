@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col-lg-12 text-right">
                             <button class="btn btn-success" data-toggle='modal' data-target="#create"> <i
-                                    class="fa fa-edit"></i> Registrar Usuario
+                                class="fa fa-plus" ></i> Registrar Usuario
                             </button>
                         </div>
                     </div>
