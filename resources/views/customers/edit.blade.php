@@ -91,12 +91,6 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="connectionHolderUpdate" class="form-label">Titular de la Conexión</label>
-                                            <input type="text" class="form-control" name="connectionHolderUpdate" id="connectionHolderUpdate" value="{{ $customer->connection_holder }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
                                             <label for="hasAllPaymentsUpdate" class="form-label">¿Está al día?</label>
                                             <select class="form-control" id="hasAllPaymentsUpdate" name="hasAllPaymentsUpdate" required>
                                                 <option value="">Selecciona una opción</option>
@@ -144,6 +138,17 @@
                                                 <option value="">Selecciona una opción</option>
                                                 <option value="1" {{ $customer->has_cistern == 1 ? 'selected' : '' }}>Sí</option>
                                                 <option value="0" {{ $customer->has_cistern == 0 ? 'selected' : '' }}>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="costIdUpdate" class="form-label">Costo(*)</label>
+                                            <select class="form-control" id="costIdUpdate" name="costIdUpdate" required>
+                                                <option value="">Selecciona una opción</option>
+                                                @foreach($costs as $cost)
+                                                    <option value="{{ $cost->id }}" {{ $customer->cost_id == $cost->id ? 'selected' : '' }}>{{ $cost->category }} - {{ $cost->price }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

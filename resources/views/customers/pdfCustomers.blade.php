@@ -67,7 +67,6 @@
                 <th>PAREJA</th>
                 <th>¿TIENE TOMA?</th>
                 <th>¿TIENE LOCAL?</th>
-                <th>TITULAR</th>
                 <th>¿VA AL CORRIENTE?</th>
                 <th>¿TIENE AGUA DE DIA Y NOCHE?</th>
                 <th>DIAS DE AGUA</th>
@@ -92,7 +91,6 @@
                 <td>{{ $customer->partner_name }}</td>
                 <td>{{ $customer->has_water_connection ? 'Sí' : 'No' }}</td>
                 <td>{{ $customer->has_store ? 'Sí' : 'No' }}</td>
-                <td>{{ $customer->connection_holder }}</td>
                 <td>{{ $customer->is_current ? 'Sí' : 'No' }}</td>
                 <td>{{ $customer->has_water_24_7 ? 'Sí' : 'No' }}</td>
                 <td>{{ $customer->water_days }}</td>
