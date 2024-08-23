@@ -54,7 +54,7 @@
     </style>
 </head>
 <body>
-    <h1>COMITÉ DEL SIATEMA DE AGUA POTABLE, SANTIAGO TOLMAN A.C</h1>
+    <h1>COMITÉ DEL SISTEMA DE AGUA POTABLE, SANTIAGO TOLMAN A.C</h1>
     <table id="customers" class="table table-striped display responsive nowrap">
         <thead>
             <tr>

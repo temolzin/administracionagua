@@ -40,4 +40,10 @@ class Customer extends Model
     {
         return $this->belongsTo(Cost::class);
     }
+   
+    public function debts()
+    {
+        return $this->hasMany(Debt::class);
+    }
+
 }

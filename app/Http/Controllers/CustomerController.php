@@ -20,7 +20,7 @@ class CustomerController extends Controller
     {
         Customer::create($request->all());
 
-        return redirect()->route('customers.index')->with('success', 'Cliente registrado correctamente.');
+        return redirect()->route('customers.index')->with('success', 'Usuario registrado correctamente.');
     }
 
     public function update(Request $request, $id)
@@ -65,7 +65,7 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         $customer->delete();
-        return redirect()->route('customers.index')->with('success', 'Cliente eliminado correctamente.');
+        return redirect()->route('customers.index')->with('success', 'Usuario eliminado correctamente.');
     }
 
     public function pdfCustomers()

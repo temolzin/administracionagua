@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CostController;
+use App\Http\Controllers\DebtController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,14 +35,20 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::group(['middleware' => ['auth']], function () {
+
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::resource('users', UserController::class);
 
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::resource('customers', CustomerController::class);
     
+    Route::get('/roles', [RoleController::class, 'roles'])->name('roles.index');
     Route::resource('roles', RoleController::class);
  
     Route::resource('costs', CostController::class);
+
+    Route::post('/debts/assign-all', [DebtController::class, 'assignAll'])->name('debts.assignAll');
+    Route::resource('debts', DebtController::class);
     
     Route::post('/users/{user}/updateRole', [UserController::class, 'updateRole'])->name('users.updateRole');
 });

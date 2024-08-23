@@ -24,7 +24,7 @@ class RolesAndPermissionsSeeder extends Seeder
         ])->assignRole($roleAdmin);
         Permission::create([
             'name' => 'viewCustomers',
-            'description' => 'Permite ver los Clientes.'
+            'description' => 'Permite ver los Usuarios.'
         ])->assignRole([$roleManager, $roleSecretariat ]);
         Permission::create([
             'name' => 'viewPayments',
