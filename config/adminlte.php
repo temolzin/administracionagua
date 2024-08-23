@@ -327,7 +327,7 @@ return [
             'icon' => 'fas fa-fw fa-user-shield'
         ],
         [
-            'text' => 'Clientes',
+            'text' => 'Usuarios',
             'url' => '/customers',
             'icon' => 'fas fa-fw fa-users',
         ],

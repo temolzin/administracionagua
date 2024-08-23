@@ -35,9 +35,9 @@
                                         style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Cliente</th>
-                                                <th>Total Deuda</th>
-                                                <th>Opciones</th>
+                                                <th>USUARIO</th>
+                                                <th>TOTAL DE LA DEUDA</th>
+                                                <th>OPCIONES</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -61,11 +61,8 @@
                                                     <td colspan="3">No hay deudas registradas.</td>
                                                 </tr>
                                             @endforelse
-
                                             @include('debts.create')
                                         </tbody>
-
-
                                     </table>
                                 </div>
                             </div>

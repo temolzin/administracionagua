@@ -38,7 +38,7 @@ class DebtController extends Controller
             ->exists();
 
         if ($existingDebt) {
-            return redirect()->back()->with('error', 'El cliente ya tiene una deuda en este rango de fechas.')->withInput();
+            return redirect()->back()->with('error', 'El Usuario ya tiene una deuda en este rango de fechas.')->withInput();
         }
 
         Debt::create([
@@ -98,7 +98,7 @@ class DebtController extends Controller
             return redirect()->back()->with('error', 'Ya todos los usuarios tienen la deuda del periodo.');
         }
 
-        return redirect()->back()->with('success', 'Deudas asignadas a todos los clientes.');
+        return redirect()->back()->with('success', 'Deudas asignadas a todos los Usuarios.');
     }
 
 
