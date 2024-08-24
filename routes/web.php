@@ -7,6 +7,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CostController;
 use App\Http\Controllers\DebtController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/debts/assign-all', [DebtController::class, 'assignAll'])->name('debts.assignAll');
     Route::resource('debts', DebtController::class);
+
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+    Route::resource('payments', PaymentController::class);
+    Route::get('/getCustomerDebts', [PaymentController::class, 'getCustomerDebts'])->name('getCustomerDebts');
     
     Route::post('/users/{user}/updateRole', [UserController::class, 'updateRole'])->name('users.updateRole');
 });
