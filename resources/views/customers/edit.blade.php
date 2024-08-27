@@ -23,6 +23,16 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
+                                    <div class="col-lg-8 offset-lg-2">
+                                        <div class="form-group text-center">
+                                            <label for="photo-{{ $customer->id }}" class="form-label"></label>
+                                            <div class="image-preview-container" style="display: flex; justify-content: center; margin-bottom: 10px;">
+                                                <img id="photo-preview-edit-{{ $customer->id }}" src="{{ $customer->getFirstMediaUrl('customerGallery') ? $customer->getFirstMediaUrl('customerGallery') : asset('img/userDefault.png') }}" 
+                                                  alt="Foto Actual" style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 5px;">
+                                            </div>
+                                            <input type="file" class="form-control" name="photo" id="photo-{{ $customer->id }}" onchange="previewImageEdit(event, {{ $customer->id }})">
+                                        </div>
+                                    </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="nameUpdate" class="form-label">Nombre(*)</label>
@@ -104,8 +114,8 @@
                                             <label for="hasWaterDayNightUpdate" class="form-label">¿Tiene agua día y noche?</label>
                                             <select class="form-control" id="hasWaterDayNightUpdate" name="hasWaterDayNightUpdate" required>
                                                 <option value="">Selecciona una opción</option>
-                                                <option value="1" {{ $customer->has_water_day_night == 1 ? 'selected' : '' }}>Sí</option>
-                                                <option value="0" {{ $customer->has_water_day_night == 0 ? 'selected' : '' }}>No</option>
+                                                <option value="1" {{ $customer->has_water_day_night == 1 ? 'selected' : '' }}>Día si noche no</option>
+                                                <option value="0" {{ $customer->has_water_day_night == 0 ? 'selected' : '' }}>Noche si día no</option>
                                             </select>
                                         </div>
                                     </div>
@@ -126,8 +136,8 @@
                                             <label for="hasWaterPressureUpdate" class="form-label">¿Tiene presión de agua?</label>
                                             <select class="form-control" id="hasWaterPressureUpdate" name="hasWaterPressureUpdate" required>
                                                 <option value="">Selecciona una opción</option>
-                                                <option value="1" {{ $customer->has_water_pressure == 1 ? 'selected' : '' }}>Sí</option>
-                                                <option value="0" {{ $customer->has_water_pressure == 0 ? 'selected' : '' }}>No</option>
+                                                <option value="1" {{ $customer->has_water_pressure == 1 ? 'selected' : '' }}>Día si noche no</option>
+                                                <option value="0" {{ $customer->has_water_pressure == 0 ? 'selected' : '' }}>Noche si día no</option>
                                             </select>
                                         </div>
                                     </div>
@@ -165,3 +175,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    function previewImageEdit(event, customerId) {
+    var reader = new FileReader();
+    reader.onload = function(){
+        var output = document.getElementById('photo-preview-edit-' + customerId);
+        output.src = reader.result;
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+</script>

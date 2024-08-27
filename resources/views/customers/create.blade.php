@@ -25,6 +25,14 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
+                                    <div class="col-lg-8 offset-lg-2">
+                                        <div class="form-group text-center">
+                                            <div class="image-preview-container" style="display: flex; justify-content: center; margin-top: 10px;">
+                                                <img id="photo-preview" src="#" alt="Vista previa de la foto" style="display: none; width: 120px; height: 120px; border-radius: 50%; margin-bottom: 5px;">
+                                            </div>
+                                            <input type="file" class="form-control" name="photo" id="photo" aria-describedby="photoHelp" onchange="previewImage(event)" />
+                                        </div>
+                                    </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="name" class="form-label">Nombre(*)</label>
@@ -107,8 +115,8 @@
                                             <label for="has_water_day_night" class="form-label">¿Tiene agua día y noche?</label>
                                             <select class="form-control" id="has_water_day_night" name="has_water_day_night" required>
                                                 <option value="">Selecciona una opción</option>
-                                                <option value="1" {{ old('has_water_day_night') == '1' ? 'selected' : '' }}>Sí</option>
-                                                <option value="0" {{ old('has_water_day_night') == '0' ? 'selected' : '' }}>No</option>
+                                                <option value="1" {{ old('has_water_day_night') == '1' ? 'selected' : '' }}>Día si noche no</option>
+                                                <option value="0" {{ old('has_water_day_night') == '0' ? 'selected' : '' }}>Noche si día no</option>
                                             </select>
                                         </div>
                                     </div>                                    
@@ -129,8 +137,8 @@
                                             <label for="has_water_pressure" class="form-label">¿Tiene presión de agua?</label>
                                             <select class="form-control" id="has_water_pressure" name="has_water_pressure" required>
                                                 <option value="">Selecciona una opción</option>
-                                                <option value="1" {{ old('has_water_pressure') === '1' ? 'selected' : '' }}>Sí</option>
-                                                <option value="0" {{ old('has_water_pressure') === '0' ? 'selected' : '' }}>No</option>
+                                                <option value="1" {{ old('has_water_pressure') === '1' ? 'selected' : '' }}>Día si noche no</option>
+                                                <option value="0" {{ old('has_water_pressure') === '0' ? 'selected' : '' }}>Noche si día no</option>
                                             </select>
                                         </div>
                                     </div>
@@ -170,3 +178,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+        var output = document.getElementById('photo-preview');
+        output.src = reader.result;
+        output.style.display = 'block';
+    }
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+</script>
+
