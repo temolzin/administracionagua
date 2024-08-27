@@ -14,6 +14,17 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group text-center">
+                                        @if ($customer->getFirstMediaUrl('customerGallery'))
+                                            <img src="{{ $customer->getFirstMediaUrl('customerGallery') }}" alt="Foto del Usuario" class="img-fluid" 
+                                             style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 5px;">
+                                        @else
+                                            <img src="{{ asset('img/userDefault.png') }}" alt="Foto del Usuario" class="img-fluid" 
+                                            style="width: 120px; height: 120px; border-radius: 50%; margin-bottom: 5px;">
+                                        @endif
+                                    </div>
+                                </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
                                         <label>ID</label>
@@ -77,7 +88,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>¿Tiene Agua Día y Noche?</label>
-                                        <input type="text" disabled class="form-control" value="{{ $customer->has_water_day_night ? 'Sí' : 'No' }}" />
+                                        <input type="text" disabled class="form-control" value="{{ $customer->has_water_day_night ? 'Día si noche no' : 'Noche si día no' }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -95,7 +106,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>¿Tiene Presión de Agua?</label>
-                                        <input type="text" disabled class="form-control" value="{{ $customer->has_water_pressure ? 'Sí' : 'No' }}" />
+                                        <input type="text" disabled class="form-control" value="{{ $customer->has_water_pressure ? 'Día si noche no' : 'Noche si día no' }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

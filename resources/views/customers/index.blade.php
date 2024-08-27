@@ -31,6 +31,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>FOTO</th>
                                             <th>NOMBRE</th>
                                             <th>TIENE TOMA</th>
                                             <th>OPCIONES</th>
@@ -45,6 +46,15 @@
                                         @foreach($customers as $customer)
                                         <tr>
                                             <td scope="row">{{$customer->id}}</td>
+                                            <td>
+                                                @if ($customer->getFirstMediaUrl('customerGallery'))
+                                                <img src="{{$customer->getFirstMediaUrl('customerGallery') }}" alt="Foto de {{$customer->name}}"
+                                                    style="width: 50px; height: 50px; border-radius: 50%;">
+                                            @else
+                                                <img src="{{ asset('img/userDefault.png') }}"
+                                                    style="width: 50px; height: 50px; border-radius: 50%;">
+                                            @endif
+                                            </td>
                                             <td>{{$customer->name}} {{$customer->last_name}}</td>
                                             <td>{{ $customer->has_water_connection ? 'SI' : 'NO' }}</td>
                                             <td>

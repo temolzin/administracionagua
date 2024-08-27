@@ -18,8 +18,12 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        Customer::create($request->all());
-
+        $customer = Customer::create($request->all());
+    
+        if ($request->hasFile('photo')) {
+            $customer->addMediaFromRequest('photo')->toMediaCollection('customerGallery');
+        }
+    
         return redirect()->route('customers.index')->with('success', 'Usuario registrado correctamente.');
     }
 
@@ -46,6 +50,11 @@ class CustomerController extends Controller
             $customer->cost_id = $request->input('costIdUpdate');
 
             $customer->save();
+
+            if ($request->hasFile('photo')) {
+                $customer->clearMediaCollection('customerGallery');
+                $customer->addMediaFromRequest('photo')->toMediaCollection('customerGallery');
+            }
 
 
             return redirect()->route('customers.index')->with('success', 'Usuario actualizado correctamente.');
