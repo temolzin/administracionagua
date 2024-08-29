@@ -29,6 +29,11 @@
                             </div>
                             <hr>
                             <h5>Deudas Asociadas</h5>
+
+                            <div class="form-group">
+                                <input type="text" id="searchDebt{{ $debt->customer->id }}" class="form-control search-input" placeholder="🔍 Buscar por ID, monto, estado o fechas...">
+                            </div>
+
                             <div class="debt-list">
                                 @foreach ($debt->customer->debts as $customerDebt)
                                     <div class="debt-item card mb-3">
@@ -40,8 +45,8 @@
                                                 <div class="col-md-12">
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <p><strong>Fecha de Inicio:</strong> {{ strftime('%d de %B de %Y', strtotime($customerDebt->start_date)) }}</p>
-                                                            <p><strong>Fecha de Fin:</strong> {{ strftime('%d de %B de %Y', strtotime($customerDebt->end_date)) }}</p>
+                                                            <p><strong>Fecha de Inicio:</strong> {{ \Carbon\Carbon::parse($customerDebt->start_date)->locale('es')->isoFormat('D [de] MMMM [del] YYYY') }}
+                                                            <p><strong>Fecha de Fin:</strong> {{ \Carbon\Carbon::parse($customerDebt->end_date)->locale('es')->isoFormat('D [de] MMMM [del] YYYY') }}</p>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <p><strong>Monto:</strong> ${{ number_format($customerDebt->amount, 2) }}</p>
@@ -86,3 +91,32 @@
         </div>
     </div>
 </div>
+
+<style>
+    .search-input:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        background-color: #ffffff;
+    }
+</style>
+
+<script>
+    document.getElementById('searchDebt{{ $debt->customer->id }}').addEventListener('input', function() {
+        let searchValue = this.value.toLowerCase();
+        let debtItems = document.querySelectorAll('#viewDebts{{ $debt->customer->id }} .debt-item');
+
+        debtItems.forEach(function(item) {
+            let id = item.querySelector('.col-md-1 p').innerText.toLowerCase();
+            let amount = item.querySelector('.col-md-2 p').innerText.toLowerCase();
+            let status = item.querySelector('.col-md-2 p button').innerText.toLowerCase();
+            let startDate = item.querySelector('.col-md-6 p').innerText.toLowerCase();
+            let endDate = item.querySelector('.col-md-6 p + p').innerText.toLowerCase();
+
+            if (id.includes(searchValue) || amount.includes(searchValue) || status.includes(searchValue) || startDate.includes(searchValue) || endDate.includes(searchValue)) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+</script>

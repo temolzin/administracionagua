@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Models\Cost;
 
 class Customer extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -46,6 +47,18 @@ class Customer extends Model implements HasMedia
     public function debts()
     {
         return $this->hasMany(Debt::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $user->debts->each(function ($debt) {
+                $debt->payments()->delete();
+            });
+            $user->debts()->delete();
+        });
     }
 
 }

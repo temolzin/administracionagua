@@ -118,7 +118,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Costo</label>
-                                        <input type="text" disabled class="form-control" value="{{ $customer->cost->category }} - {{ $customer->cost->price }}" />
+                                        <input type="text" disabled class="form-control" value="{{ $customer->cost->category ?? 'NULL' }} - {{ $customer->cost->price ?? 'null'}}" />
                                     </div>
                                 </div>
                             </div>

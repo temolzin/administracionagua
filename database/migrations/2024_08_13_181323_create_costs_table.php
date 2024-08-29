@@ -18,6 +18,7 @@ class CreateCostsTable extends Migration
             $table->string('category');
             $table->decimal('price', 8, 2);
             $table->text('description')->nullable();
+            $table->softDeletes();
         });
     }
 

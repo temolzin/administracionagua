@@ -40,8 +40,9 @@
                                                 @foreach($payments as $payment)
                                                     <tr>
                                                         <td>{{ $payment->id }}</td>
-                                                        <td>{{ $payment->debt->customer->name ?? 'Desconocido' }}</td>
-                                                        <td> {{ $payment->debt->start_date }} - {{ $payment->debt->end_date }}
+                                                        <td>{{ $payment->debt->customer->name ?? 'Desconocido' }} {{ $payment->debt->customer->last_name ?? 'Desconocido' }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($payment->debt->start_date)->locale('es')->isoFormat('MMMM [/] YYYY')}} - 
+                                                            {{ \Carbon\Carbon::parse($payment->debt->end_date)->locale('es')->isoFormat('MMMM [/] YYYY') }}
                                                             | Monto: {{ $payment->debt->amount }}</td>
                                                         <td>{{ $payment->amount }}</td>
                                                         <td>
@@ -49,12 +50,16 @@
                                                                 <button type="button" class="btn btn-info mr-2" data-toggle="modal" title="Ver Detalles" data-target="#view{{ $payment->id }}">
                                                                     <i class="fas fa-eye"></i>
                                                                 </button>
+                                                                <button type="button" class="btn btn-warning mr-2" data-toggle="modal" title="Editar Datos" data-target="#editPayment{{$payment->id}}">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </button>
                                                                 <button type="button" class="btn btn-danger mr-2" data-toggle="modal" title="Eliminar Registro" data-target="#delete{{ $payment->id }}">
                                                                     <i class="fas fa-trash-alt"></i>
                                                                 </button>
                                                             </div>
                                                         </td>
                                                         @include('payments.delete')
+                                                        @include('payments.edit')
                                                         @include('payments.show')
                                                     </tr>
                                                 @endforeach
@@ -73,30 +78,41 @@
 @section('js')
 <script>
     $(document).ready(function() {
-        $('#customer_id').change(function() {
-            var customerId = $(this).val();
-            
-            if (customerId) {
-                $.ajax({
-                    url: '{{ route("getCustomerDebts") }}',
-                    type: 'GET',
-                    data: { customer_id: customerId },
-                    success: function(response) {
-                        $('#debt_id').empty();
-                        $('#debt_id').append('<option value="">Selecciona una deuda</option>');
-                        $.each(response.debts, function(key, value) {
-                            $('#debt_id').append('<option value="'+ value.id +'">'+ value.start_date +' - '+ value.end_date +' | Monto: '+ value.amount +'</option>');
-                        });
-                    },
-                    error: function(xhr) {
-                        console.log('Error:', xhr.responseText);
-                    }
-                });
-            } else {
-                $('#debt_id').empty();
-                $('#debt_id').append('<option value="">Selecciona una deuda</option>');
-            }
-        });
+  $('#customer_id').change(function() {
+        var customerId = $(this).val();
+        
+        if (customerId) {
+            $.ajax({
+                url: '{{ route("getCustomerDebts") }}',
+                type: 'GET',
+                data: { customer_id: customerId },
+                success: function(response) {
+                    $('#debt_id').empty();
+                    $('#debt_id').append('<option value="">Selecciona una deuda</option>');
+                    $.each(response.debts, function(key, value) {
+                        $('#debt_id').append('<option value="'+ value.id +'" data-remaining-amount="'+ value.remaining_amount +'">'+ value.start_date +' - '+ value.end_date +' | Monto: '+ value.amount +'</option>');
+                    });
+                },
+                error: function(xhr) {
+                    console.log('Error:', xhr.responseText);
+                }
+            });
+        } else {
+            $('#debt_id').empty();
+            $('#debt_id').append('<option value="">Selecciona una deuda</option>');
+        }
+    });
+
+    $('#debt_id').change(function() {
+        var selectedOption = $(this).find('option:selected');
+        var remainingAmount = selectedOption.data('remaining-amount');
+        
+        if (remainingAmount !== undefined) {
+            $('#suggested_amount').text('Monto sugerido a pagar: $' + remainingAmount);
+        } else {
+            $('#suggested_amount').text('');
+        }
+    });
 
         $('#payments').DataTable({
             responsive: true,
@@ -113,7 +129,15 @@
                 confirmButtonText: 'Aceptar'
             });
         }
+        var errorMessage = "{{ session('error') }}";
+            if (errorMessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage,
+                    confirmButtonText: 'Aceptar'
+                });
+        }
     });
 </script>
 @endsection
-

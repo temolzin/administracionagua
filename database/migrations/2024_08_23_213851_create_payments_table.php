@@ -17,7 +17,9 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('debt_id');
             $table->decimal('amount', 10, 2);
+            $table->date('payment_date'); 
             $table->text('note')->nullable();
+            $table->softDeletes();
        
             $table->foreign('debt_id')->references('id')->on('debts')->onDelete('cascade');
         });
