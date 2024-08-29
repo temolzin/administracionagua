@@ -35,6 +35,7 @@
                                         style="width:100%">
                                         <thead>
                                             <tr>
+                                                <th>ID</th>
                                                 <th>USUARIO</th>
                                                 <th>TOTAL DE LA DEUDA</th>
                                                 <th>OPCIONES</th>
@@ -43,13 +44,12 @@
                                         <tbody>
                                             @forelse ($debts as $debt)
                                                 <tr>
+                                                    <td>{{ $debt->customer->id }} </td>
                                                     <td>{{ $debt->customer->name }} {{ $debt->customer->last_name }}</td>
                                                     <td>{{ $debt->total_amount }}</td>
                                                     <td>
                                                         <div class="btn-group" role="group" aria-label="Opciones">
-                                                            <button type="button" class="btn btn-info mr-2"
-                                                                data-toggle="modal" title="Ver Detalles"
-                                                                data-target="#viewDebts{{ $debt->customer->id }}">
+                                                            <button type="button" class="btn btn-info mr-2" data-toggle="modal" title="Ver Detalles"data-target="#viewDebts{{ $debt->customer->id }}">
                                                                 <i class="fas fa-eye"></i>
                                                             </button>
                                                         </div>

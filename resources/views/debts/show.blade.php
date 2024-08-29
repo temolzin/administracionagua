@@ -14,15 +14,15 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-2">
+                                <div class="col-lg-5">
                                     <div class="form-group">
                                         <label>ID</label>
                                         <input type="text" disabled class="form-control" value="{{ $customerDebt->id }}" />
                                     </div>
                                 </div>
-                                <div class="col-lg-5">
+                                <div class="col-lg-7">
                                     <div class="form-group">
-                                        <label>Monto</label>
+                                        <label>Monto de la Deuda</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-dollar-sign"></i></span>
@@ -31,16 +31,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-5">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Cantidad Pagada</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-dollar-sign"></i></span>
+                                            </div>
+                                            <input type="text" disabled class="form-control" value="{{ number_format($customerDebt->debt_current, 2) }}" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Estado</label>
                                         <p class="form-control">
                                             @if ($customerDebt->status === 'pending')
-                                                <button class="btn btn-danger btn-xs">No pagada</button>
+                                                <button class="badge badge-danger">No pagada</button>
                                             @elseif ($customerDebt->status === 'partial')
-                                                <button class="btn btn-warning btn-xs">Abonada</button>
+                                                <button class="badge badge-warning">Abonada</button>
                                             @elseif ($customerDebt->status === 'paid')
-                                                <button class="btn btn-success btn-xs">Pagada</button>
+                                                <button class="badge badge-success">Pagada</button>
                                             @endif
                                         </p>
                                     </div>
@@ -48,13 +59,13 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Fecha de Inicio</label>
-                                        <input type="text" disabled class="form-control" value="{{ strftime('%d de %B de %Y', strtotime($customerDebt->start_date)) }}" />
+                                        <input type="text" disabled class="form-control" value="{{ \Carbon\Carbon::parse($customerDebt->start_date)->locale('es')->isoFormat('D [de] MMMM [del] YYYY') }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Fecha de Fin</label>
-                                        <input type="text" disabled class="form-control" value="{{ strftime('%d de %B de %Y', strtotime($customerDebt->end_date)) }}" />
+                                        <input type="text" disabled class="form-control" value="{{ \Carbon\Carbon::parse($customerDebt->end_date)->locale('es')->isoFormat('D [de] MMMM [del] YYYY') }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-12">

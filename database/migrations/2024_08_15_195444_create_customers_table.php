@@ -32,6 +32,7 @@ class CreateCustomersTable extends Migration
             $table->integer('water_days');
             $table->boolean('has_water_pressure');
             $table->boolean('has_cistern');
+            $table->softDeletes();
           
             $table->foreign('cost_id')->references('id')->on('costs')->onDelete('cascade');
         });
