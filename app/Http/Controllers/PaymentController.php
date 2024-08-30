@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\Debt;
 use App\Models\Customer;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Crypt;
 
 class PaymentController extends Controller
 {
@@ -127,5 +129,26 @@ class PaymentController extends Controller
         $debt->save();
 
         return redirect()->route('payments.index')->with('success', 'Pago eliminado exitosamnete.');
+    }
+
+    public function annualEarningsReport($year)
+    {
+        $year = intval($year);
+
+        $monthlyEarnings = [];
+        $totalEarnings = 0;
+
+        for ($month = 1; $month <= 12; $month++) {
+            $earnings = Payment::whereYear('payment_date', $year)
+                ->whereMonth('payment_date', $month)
+                ->sum('amount');
+
+            $monthlyEarnings[$month] = $earnings;
+            $totalEarnings += $earnings;
+        }
+
+        $pdf = PDF::loadView('reports.annualEarnings', compact('monthlyEarnings', 'totalEarnings', 'year'));
+
+        return $pdf->stream('annual_earnings_' . $year . '.pdf');
     }
 }
