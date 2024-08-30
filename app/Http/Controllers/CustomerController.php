@@ -19,11 +19,11 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $customer = Customer::create($request->all());
-    
+
         if ($request->hasFile('photo')) {
             $customer->addMediaFromRequest('photo')->toMediaCollection('customerGallery');
         }
-    
+
         return redirect()->route('customers.index')->with('success', 'Usuario registrado correctamente.');
     }
 
@@ -84,5 +84,25 @@ class CustomerController extends Controller
             ->setPaper('legal', 'landscape');
 
         return $pdf->stream('customers.pdf');
+    }
+
+    public function reportCurrentCustomers()
+    {
+        $customers = Customer::whereDoesntHave('debts', function ($query) {
+            $query->where('status', '!=', 'paid');
+        })->get();
+    
+        $pdf = Pdf::loadView('reports.reportCurrentCustomers', compact('customers'));
+        return $pdf->stream('reporte_clientes_al_corriente.pdf');
+    }
+
+    public function customersWithDebts()
+    {
+        $customers = Customer::whereHas('debts', function ($query) {
+            $query->where('status', '!=', 'paid');
+        })->get();
+
+        $pdf = Pdf::loadView('reports.customersWithDebts', compact('customers'));
+        return $pdf->stream('reporte_clientes_con_deudas.pdf');
     }
 }

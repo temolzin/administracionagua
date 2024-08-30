@@ -14,15 +14,16 @@
                             <div class="col-lg-12 text-right">
                                 <form action="{{ route('debts.assignAll') }}" method="POST" style="display:inline;">
                                     @csrf
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#assignDebtModal">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignDebtModal">
                                         <i class="fa fa-plus"></i> Asignar Deuda a Todos
                                     </button>
                                 </form>
-                                <button type="button" class="btn btn-success" data-toggle="modal"
-                                    data-target="#createDebt">
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createDebt">
                                     <i class="fa fa-plus"></i> Crear Deuda
                                 </button>
+                                <a type="button" class="btn btn-secondary" target="_blank" title="Customers" href="{{ route('report.with-debts') }}">
+                                    <i class="fas fa-users"></i> Clientes con deudas
+                                </a>
                             </div>
                         </div>
                         <div class="clearfix"></div>

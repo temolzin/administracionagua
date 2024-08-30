@@ -28,7 +28,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
+Route::get('/annual-earnings-report/{year}', [PaymentController::class, 'annualEarningsReport']);
 Route::get('customers/pdfCustomers', [CustomerController::class, 'pdfCustomers'])->name('customers.pdfCustomers');
+Route::get('/report/current-customers', [CustomerController::class, 'reportCurrentCustomers'])->name('report.current-customers');
+Route::get('/customers-with-debts', [CustomerController::class, 'customersWithDebts'])->name('report.with-debts');
 
 
 Route::post('login', [LoginController::class, 'login']);
