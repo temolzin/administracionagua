@@ -38,9 +38,9 @@
             border: 1px solid #dee2e6;
         }
         th, td {
-            padding: 12px;
+            padding: 8px;
             text-align: left;
-            font-size: 16px;
+            font-size: 11px;
         }
         th {
             background-color: #2e4764;
@@ -73,8 +73,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Deudas</th>
-                    <th>Total</th>
+                    <th>Total de la Deuda</th>
                 </tr>
             </thead>
             <tbody>
@@ -83,21 +82,10 @@
                     <td>{{ $customer->id }}</td>
                     <td>{{ $customer->name }} {{ $customer->last_name }}</td>
                     <td>
-                        <ul>
-                            @php
-                                $unpaidDebts = $customer->debts->where('status', '!=', 'paid');
-                                $totalDebt = $unpaidDebts->sum('amount');
-                            @endphp
-                            @foreach($unpaidDebts as $debt)
-                            <li>
-                                {{ \Carbon\Carbon::parse($debt->start_date )->locale('es')->isoFormat('MMMM [/] YYYY')}} - 
-                                {{ \Carbon\Carbon::parse($debt->end_date)->locale('es')->isoFormat('MMMM [/] YYYY') }}
-                                | Monto: {{ number_format($debt->amount, 2) }}
-                            </li>
-                            @endforeach
-                        </ul>
-                    </td>
-                    <td>
+                        @php
+                        $unpaidDebts = $customer->debts->where('status', '!=', 'paid');
+                        $totalDebt = $unpaidDebts->sum('amount');
+                    @endphp
                         {{ number_format($totalDebt, 2) }}
                     </td>
                 </tr>

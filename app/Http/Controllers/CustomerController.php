@@ -6,12 +6,21 @@ use App\Models\Customer;
 use App\Models\Cost;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Mpdf\Mpdf;
 
 class CustomerController extends Controller
 {
-    public function index()
+
+    public function index(Request $request)
     {
-        $customers = Customer::all();
+        $query = Customer::query();
+    
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->whereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$search}%"]);
+        }
+    
+        $customers = $query->paginate(10);
         $costs = Cost::all();
         return view('customers.index', compact('customers', 'costs'));
     }

@@ -1,4 +1,4 @@
-<div class="modal fade" id="delete{{ $cost->id }}"tabindex="-1" cost="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="delete{{ $cost->id }}" tabindex="-1" cost="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" cost="document">
         <div class="modal-content">
             <div class="modal-header bg-danger">

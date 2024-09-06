@@ -1,5 +1,7 @@
 @extends('adminlte::page')
+
 @section('title', 'Pagos')
+
 @section('content')
     <section class="content">
         <div class="right_col" payment="main">
@@ -21,7 +23,18 @@
                                     <i class="fas fa-users"></i> Clientes al día
                                 </a>
                             </div>
-                        <div class="clearfix"></div>
+                            <div class="clearfix"></div>
+                            <div class="col-lg-8">
+                                <div class="input-group my-3">
+                                    <input type="text" id="searchName" class="form-control" placeholder="Buscar por nombre de usuario">
+                                    <input type="text" id="searchPeriod" class="form-control" placeholder="Buscar por período">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                        </div>
                     </div>
                     <div class="x_content">
                         <div class="row">
@@ -47,21 +60,27 @@
                                                     <tr>
                                                         <td>{{ $payment->id }}</td>
                                                         <td>{{ $payment->debt->customer->name ?? 'Desconocido' }} {{ $payment->debt->customer->last_name ?? 'Desconocido' }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($payment->debt->start_date)->locale('es')->isoFormat('MMMM [/] YYYY')}} - 
+                                                        <td>
+                                                            {{ \Carbon\Carbon::parse($payment->debt->start_date)->locale('es')->isoFormat('MMMM [/] YYYY')}} - 
                                                             {{ \Carbon\Carbon::parse($payment->debt->end_date)->locale('es')->isoFormat('MMMM [/] YYYY') }}
-                                                            | Monto: {{ $payment->debt->amount }}</td>
+                                                            | Monto: {{ $payment->debt->amount }}
+                                                        </td>
                                                         <td>{{ $payment->amount }}</td>
                                                         <td>
                                                             <div class="btn-group" payment="group" aria-label="Opciones">
                                                                 <button type="button" class="btn btn-info mr-2" data-toggle="modal" title="Ver Detalles" data-target="#view{{ $payment->id }}">
                                                                     <i class="fas fa-eye"></i>
                                                                 </button>
+                                                                @can('editPayment')
                                                                 <button type="button" class="btn btn-warning mr-2" data-toggle="modal" title="Editar Datos" data-target="#editPayment{{$payment->id}}">
                                                                     <i class="fas fa-edit"></i>
                                                                 </button>
+                                                                @endcan
+                                                                @can('deletePayment')
                                                                 <button type="button" class="btn btn-danger mr-2" data-toggle="modal" title="Eliminar Registro" data-target="#delete{{ $payment->id }}">
                                                                     <i class="fas fa-trash-alt"></i>
                                                                 </button>
+                                                                @endcan
                                                             </div>
                                                         </td>
                                                         @include('payments.delete')
@@ -72,6 +91,9 @@
                                             @endif
                                         </tbody>
                                     </table>
+                                    <div class="d-flex justify-content-center">
+                                       {!! $payments->links('pagination::bootstrap-4') !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -81,12 +103,18 @@
         </div>
     </section>
 @endsection
+
 @section('js')
 <script>
-    $(document).ready(function() {
-  $('#customer_id').change(function() {
+$(document).ready(function() {
+    $('#createPayment').on('shown.bs.modal', function() {
+        $('.select2').select2({
+            dropdownParent: $('#createPayment')
+        });
+    });
+    
+    $('#customer_id').change(function() {
         var customerId = $(this).val();
-        
         if (customerId) {
             $.ajax({
                 url: '{{ route("getCustomerDebts") }}',
@@ -120,30 +148,48 @@
         }
     });
 
-        $('#payments').DataTable({
-            responsive: true,
-            buttons: ['excel', 'pdf', 'print'],
-            dom: 'Bfrtip',
-        });
-
-        var successMessage = "{{ session('success') }}";
-        if (successMessage) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                text: successMessage,
-                confirmButtonText: 'Aceptar'
-            });
-        }
-        var errorMessage = "{{ session('error') }}";
-            if (errorMessage) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: errorMessage,
-                    confirmButtonText: 'Aceptar'
-                });
-        }
+    $('#payments').DataTable({
+        responsive: true,
+        paging: false,
+        info: false,
+        searching: false
     });
+
+    var successMessage = "{{ session('success') }}";
+    var errorMessage = "{{ session('error') }}";
+
+    if (successMessage) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: successMessage,
+            confirmButtonText: 'Aceptar'
+        }).then((result) => {
+            window.location.href = "{{ route('payments.index') }}";
+        });
+    }
+
+    if (errorMessage) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: errorMessage,
+            confirmButtonText: 'Aceptar'
+        }).then((result) => {
+            window.location.href = "{{ route('payments.index') }}";
+        });
+    }
+    $('#searchName, #searchPeriod').on('keyup', function() {
+        var nameValue = $('#searchName').val().toLowerCase();
+        var periodValue = $('#searchPeriod').val().toLowerCase();
+
+        $('#payments tbody tr').filter(function() {
+            var userName = $(this).find('td:eq(1)').text().toLowerCase();
+            var period = $(this).find('td:eq(2)').text().toLowerCase();
+
+            $(this).toggle(userName.indexOf(nameValue) > -1 && period.indexOf(periodValue) > -1);
+        });
+    });
+});
 </script>
 @endsection

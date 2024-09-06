@@ -7,13 +7,13 @@ use App\Models\Payment;
 use App\Models\Debt;
 use App\Models\Customer;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Crypt;
+
 
 class PaymentController extends Controller
 {
     public function index()
     {
-        $payments = Payment::all();
+        $payments = Payment::paginate(10);
         $customers = Customer::all();
         $debts = Debt::all();
         return view('payments.index', compact('payments', 'customers', 'debts'));
@@ -112,21 +112,11 @@ class PaymentController extends Controller
     public function destroy($id)
     {
         $payment = Payment::findOrFail($id);
-        $debt = $payment->debt;
-
         $payment->delete();
 
-        $debt->debt_current -= $payment->amount;
-
-        if ($debt->debt_current >= $debt->amount) {
-            $debt->status = 'paid';
-        } elseif ($debt->debt_current > 0) {
-            $debt->status = 'partial';
-        } else {
-            $debt->status = 'pending';
+        if (!$payment) {
+            return redirect()->back()->with('error', 'Pago no encontrado.');
         }
-
-        $debt->save();
 
         return redirect()->route('payments.index')->with('success', 'Pago eliminado exitosamnete.');
     }

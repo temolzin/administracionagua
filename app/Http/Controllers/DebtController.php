@@ -16,7 +16,7 @@ class DebtController extends Controller
             ->select('customer_id')
             ->groupBy('customer_id')
             ->selectRaw('SUM(amount) as total_amount')
-            ->get();
+            ->paginate(10);
 
         return view('debts.index', compact('debts', 'customers'));
     }

@@ -8,7 +8,7 @@
                         <button type="button" class="close d-sm-inline-block text-white" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                 </div>
-                <form action="{{ route('customers.update', $customer->id) }}" method="post" id="edit-customer-form-{{ $customer->id }}">
+                <form action="{{ route('customers.update', $customer->id) }}" enctype="multipart/form-data" method="post" id="edit-customer-form-{{ $customer->id }}">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
@@ -177,13 +177,15 @@
 </div>
 
 <script>
-    function previewImageEdit(event, customerId) {
-    var reader = new FileReader();
-    reader.onload = function(){
-        var output = document.getElementById('photo-preview-edit-' + customerId);
-        output.src = reader.result;
+    function previewImageEdit(event, id) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function() {
+            var dataURL = reader.result;
+            var output = document.getElementById('photo-preview-edit-' + id);
+            output.src = dataURL;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
     }
-    reader.readAsDataURL(event.target.files[0]);
-}
-
 </script>

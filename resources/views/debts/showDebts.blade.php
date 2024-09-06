@@ -33,8 +33,7 @@
                             <div class="form-group">
                                 <input type="text" id="searchDebt{{ $debt->customer->id }}" class="form-control search-input" placeholder="🔍 Buscar por ID, monto, estado o fechas...">
                             </div>
-
-                            <div class="debt-list">
+                            <div class="debt-list overflow-auto" style="max-height: 300px;">
                                 @foreach ($debt->customer->debts as $customerDebt)
                                     <div class="debt-item card mb-3">
                                         <div class="card-body">
@@ -67,9 +66,11 @@
                                                                 <button type="button" class="btn btn-info btn-sm mr-2" data-toggle="modal" title="Ver Detalles" data-target="#view{{ $customerDebt->id }}">
                                                                     <i class="fas fa-eye"></i>
                                                                 </button>
+                                                                @can('deleteDebt')
                                                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" title="Eliminar Registro" data-target="#delete{{ $customerDebt->id }}">
                                                                     <i class="fas fa-trash-alt"></i>
                                                                 </button>
+                                                                @endcan
                                                             </div>
                                                         </div>
                                                         @include('debts.delete')
