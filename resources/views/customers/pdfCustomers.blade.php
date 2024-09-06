@@ -3,7 +3,6 @@
 <head>
     <title>Customer List</title>
     <style>
-        /* Configuración para el tamaño de página oficio y orientación acostada */
         @page {
             size: legal landscape;
             margin: 20mm;

@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
 
     /*
@@ -64,11 +64,12 @@ return [
     */
 
     'logo' => '<b>Administración</b>Agua',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => '/img/logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -298,53 +299,48 @@ return [
         [
             'type' => 'navbar-search',
             'text' => 'search',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
-
-        // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
         ['header' => 'MODULOS'],
         [
             'text' => 'Usuarios',
             'url' => '/users',
-            'icon' => 'fas fa-fw fa-user'
+            'icon' => 'fas fa-fw fa-user',
+             'can'  =>'viewUser'
         ],
         [
             'text' => 'Roles',
             'url' => '/roles',
-            'icon' => 'fas fa-fw fa-user-shield'
+            'icon' => 'fas fa-fw fa-user-shield',
+             'can'  =>'viewRoles'
         ],
         [
             'text' => 'Usuarios',
             'url' => '/customers',
             'icon' => 'fas fa-fw fa-users',
+             'can'  =>'viewCustomers'
         ],
         [
             'text' => 'Pagos',
             'url' => '/payments',
             'icon' => 'fas fa-fw fa-dollar-sign',
+             'can'  =>'viewPayments'
         ],
         [
             'text' => 'Deudas',
             'url' => '/debts',
             'icon' => 'fas fa-fw fa-credit-card',
+             'can'  =>'viewDebts'
         ],
         [
             'text' => 'Costos',
             'url' => '/costs',
             'icon' => 'fas fa-fw fa-money-bill-wave',
+             'can'  =>'viewCost'
         ],
     ],
     /*
@@ -452,12 +448,12 @@ return [
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
                 ],
             ],

@@ -46,16 +46,18 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::resource('customers', CustomerController::class);
     
-    Route::get('/roles', [RoleController::class, 'roles'])->name('roles.index');
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
     Route::resource('roles', RoleController::class);
  
     Route::resource('costs', CostController::class);
+    Route::get('/costs', [CostController::class, 'index'])->name('costs.index');
 
     Route::post('/debts/assign-all', [DebtController::class, 'assignAll'])->name('debts.assignAll');
     Route::resource('debts', DebtController::class);
 
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::resource('payments', PaymentController::class);
+
     Route::get('/getCustomerDebts', [PaymentController::class, 'getCustomerDebts'])->name('getCustomerDebts');
     
     Route::post('/users/{user}/updateRole', [UserController::class, 'updateRole'])->name('users.updateRole');

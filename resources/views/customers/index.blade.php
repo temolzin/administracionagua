@@ -23,6 +23,16 @@
                     </div>                    
                     <div class="clearfix"></div>
                 </div>
+                <div class="col-lg-4">
+                <form method="GET" action="{{ route('customers.index') }}" class="my-3">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Buscar por nombre, apellido" value="{{ request('search') }}">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                        </div>
+                    </div>
+                </form> 
+            </div>               
                 <div class="x_content">
                     <div class="row">
                         <div class="col-sm-12">
@@ -62,12 +72,16 @@
                                                     <button type="button" class="btn btn-info mr-2" data-toggle="modal" title="Ver Detalles" data-target="#view{{$customer->id}}">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
+                                                    @can('editCustomer')
                                                     <button type="button" class="btn btn-warning mr-2" data-toggle="modal" title="Editar Datos" data-target="#edit{{$customer->id}}">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
+                                                    @endcan
+                                                    @can('deleteCustomer')
                                                     <button type="button" class="btn btn-danger mr-2" data-toggle="modal" title="Eliminar Registro" data-target="#delete{{$customer->id}}">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
+                                                    @endcan
                                                 </div>
                                             </td>
                                             @include('customers.edit')
@@ -79,6 +93,9 @@
                                     </tbody>
                                 </table>
                                 @include('customers.create')
+                                <div class="d-flex justify-content-center">
+                                    {!! $customers->links('pagination::bootstrap-4') !!}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -94,18 +111,34 @@
     $(document).ready(function() {
         $('#customers').DataTable({
             responsive: true,
-            buttons: ['excel', 'pdf', 'print'],
-            dom: 'Bfrtip',
+            paging: false,
+            info: false,
+            searching: false
         });
         var successMessage = "{{ session('success') }}";
-        if (successMessage) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                text: successMessage,
-                confirmButtonText: 'Aceptar'
-            });
-        }
+    var errorMessage = "{{ session('error') }}";
+
+    if (successMessage) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: successMessage,
+            confirmButtonText: 'Aceptar'
+        }).then((result) => {
+            window.location.href = "{{ route('customers.index') }}";
+        });
+    }
+
+    if (errorMessage) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: errorMessage,
+            confirmButtonText: 'Aceptar'
+        }).then((result) => {
+            window.location.href = "{{ route('customers.index') }}";
+        });
+    }
     });
 </script>
 @endsection

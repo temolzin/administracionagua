@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
+            margin: 15;
             padding: 0;
         }
         .header {
@@ -38,9 +38,9 @@
             border: 1px solid #dee2e6;
         }
         th, td {
-            padding: 12px;
+            padding: 5px;
             text-align: left;
-            font-size: 16px;
+            font-size: 11px;
         }
         th {
             background-color: #2e4764;

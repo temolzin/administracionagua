@@ -22,7 +22,7 @@ class CostController extends Controller
     {
         Cost::create($request->all());
 
-        return redirect()->route('costs.index')->with('success', 'Cost created successfully.');
+        return redirect()->route('costs.index')->with('success', 'Costo creado exitosamente.');
     }
 
     public function show(Cost $cost)
@@ -39,13 +39,13 @@ class CostController extends Controller
     {
         $cost->update($request->all());
 
-        return redirect()->route('costs.index')->with('success', 'Cost updated successfully.');
+        return redirect()->route('costs.index')->with('success', 'Costo actualizado exitosamente.');
     }
 
     public function destroy(Cost $cost)
     {
         $cost->delete();
 
-        return redirect()->route('costs.index')->with('success', 'Cost deleted successfully.');
+        return redirect()->route('costs.index')->with('success', 'Costo eliminado exitosamente.');
     }
 }

@@ -18,7 +18,7 @@ class CostsTableSeeder extends Seeder
         DB::table('costs')->insert([
             [
                 'category' => 'Publico en general',
-                'price' => 50.00,
+                'price' => 150.00,
                 'description' => 'Tarifa para publico en general',
             ],
             [
@@ -28,12 +28,12 @@ class CostsTableSeeder extends Seeder
             ],
             [
                 'category' => 'Usuarios Nuevos',
-                'price' => 500.00,
+                'price' => 120.00,
                 'description' => 'Tarifa para Usuarios Nuevos',
             ],
             [
                 'category' => 'Madres Solteras',
-                'price' => 75.00,
+                'price' => 100.00,
                 'description' => 'Tarifas para Madres Solteras',
             ],
         ]);
