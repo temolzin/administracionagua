@@ -307,6 +307,11 @@ return [
         ],
         ['header' => 'MODULOS'],
         [
+            'text' => 'Dashboard',
+            'url' => '/dashboard',
+            'icon' => 'fa fa-home',
+        ],
+        [
             'text' => 'Usuarios',
             'url' => '/users',
             'icon' => 'fas fa-fw fa-user',
