@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CostController;
 use App\Http\Controllers\DebtController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,4 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/getCustomerDebts', [PaymentController::class, 'getCustomerDebts'])->name('getCustomerDebts');
     
     Route::post('/users/{user}/updateRole', [UserController::class, 'updateRole'])->name('users.updateRole');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('dashboard', DashboardController::class);
 });
