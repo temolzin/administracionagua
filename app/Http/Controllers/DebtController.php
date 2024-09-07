@@ -9,10 +9,20 @@ use Illuminate\Support\Facades\DB;
 
 class DebtController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
         $customers = Customer::all();
+
         $debts = Debt::with('customer')
+            ->whereHas('customer', function ($query) use ($search) {
+                $query->where('id', 'like', "%{$search}%")
+                    ->orWhere('name', 'like', "%{$search}%")
+                    ->orWhere('last_name', 'like', "%{$search}%")
+                    ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$search}%"]);
+            })
+            ->where('status', '!=', 'paid')
             ->select('customer_id')
             ->groupBy('customer_id')
             ->selectRaw('SUM(amount) as total_amount')
@@ -20,6 +30,8 @@ class DebtController extends Controller
 
         return view('debts.index', compact('debts', 'customers'));
     }
+
+
 
 
     public function store(Request $request)

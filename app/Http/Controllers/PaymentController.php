@@ -11,12 +11,55 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class PaymentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $payments = Payment::paginate(10);
+        $query = Payment::with('debt.customer')->orderBy('id', 'desc');
+
+        if ($request->filled('name')) {
+            $query->whereHas('debt.customer', function ($q) use ($request) {
+                $q->whereRaw("CONCAT(name, ' ', last_name) LIKE ?", ['%' . $request->name . '%'])
+                    ->orWhereRaw("CONCAT(last_name, ' ', name) LIKE ?", ['%' . $request->name . '%']);
+            });
+        }
+
+        if ($request->filled('period')) {
+            $periodParts = explode('/', $request->period);
+            $monthName = strtolower(trim($periodParts[0]));
+            $year = trim($periodParts[1]); // Year
+
+            $months = [
+                'enero' => 1,
+                'febrero' => 2,
+                'marzo' => 3,
+                'abril' => 4,
+                'mayo' => 5,
+                'junio' => 6,
+                'julio' => 7,
+                'agosto' => 8,
+                'septiembre' => 9,
+                'octubre' => 10,
+                'noviembre' => 11,
+                'diciembre' => 12
+            ];
+
+            $monthNumber = $months[$monthName] ?? null;
+
+            if ($monthNumber && $year) {
+                $query->whereHas('debt', function ($q) use ($year, $monthNumber) {
+                    $q->whereYear('start_date', $year)
+                        ->whereMonth('start_date', $monthNumber)
+                        ->orWhere(function ($q) use ($year, $monthNumber) {
+                            $q->whereYear('end_date', $year)
+                                ->whereMonth('end_date', $monthNumber);
+                        });
+                });
+            }
+        }
+
+        $payments = $query->paginate(10);
         $customers = Customer::all();
-        $debts = Debt::all();
-        return view('payments.index', compact('payments', 'customers', 'debts'));
+
+        return view('payments.index', compact('payments', 'customers'));
     }
 
     public function getCustomerDebts(Request $request)
