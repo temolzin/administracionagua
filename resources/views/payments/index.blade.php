@@ -25,15 +25,19 @@
                             </div>
                             <div class="clearfix"></div>
                             <div class="col-lg-8">
-                                <div class="input-group my-3">
-                                    <input type="text" id="searchName" class="form-control" placeholder="Buscar por nombre de usuario">
-                                    <input type="text" id="searchPeriod" class="form-control" placeholder="Buscar por período">
-                                    <span class="input-group-text">
-                                        <i class="fas fa-search"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            
+                                <form method="GET" action="{{ route('payments.index') }}" class="my-3">
+                                    <div class="input-group my-3">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-search"></i>
+                                        </span>
+                                        <input type="text" name="name" id="searchName" class="form-control" placeholder="Buscar por nombre de usuario" value="{{ request('name') }}">
+                                        <input type="text" name="period" id="searchPeriod" class="form-control" placeholder="Buscar por Fecha ejemplo: enero / 2024" value="{{ request('period') }}">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-primary">Buscar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>                        
                         </div>
                     </div>
                     <div class="x_content">
@@ -179,17 +183,6 @@ $(document).ready(function() {
             window.location.href = "{{ route('payments.index') }}";
         });
     }
-    $('#searchName, #searchPeriod').on('keyup', function() {
-        var nameValue = $('#searchName').val().toLowerCase();
-        var periodValue = $('#searchPeriod').val().toLowerCase();
-
-        $('#payments tbody tr').filter(function() {
-            var userName = $(this).find('td:eq(1)').text().toLowerCase();
-            var period = $(this).find('td:eq(2)').text().toLowerCase();
-
-            $(this).toggle(userName.indexOf(nameValue) > -1 && period.indexOf(periodValue) > -1);
-        });
-    });
 });
 </script>
 @endsection
