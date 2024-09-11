@@ -65,4 +65,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('dashboard', DashboardController::class);
+
+    Route::get('/receipt-payment/{id}', [PaymentController::class, 'receiptPayment'])->name('reports.receiptPayment');
 });
