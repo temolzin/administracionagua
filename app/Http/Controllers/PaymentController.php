@@ -7,6 +7,8 @@ use App\Models\Payment;
 use App\Models\Debt;
 use App\Models\Customer;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Crypt;
+use Carbon\Carbon;
 
 
 class PaymentController extends Controller
@@ -184,4 +186,52 @@ class PaymentController extends Controller
 
         return $pdf->stream('annual_earnings_' . $year . '.pdf');
     }
+
+    public function receiptPayment($paymentId)
+    {
+        $decryptedId = Crypt::decrypt($paymentId);
+        $payment = Payment::findOrFail($decryptedId);
+        $debt = $payment->debt;
+
+        $startDate = Carbon::parse($debt->start_date);
+        $endDate = Carbon::parse($debt->end_date);
+
+        $months = [
+            'January' => ['month' => 'Enero', 'year' => null, 'amount' => null, 'note' => null],
+            'February' => ['month' => 'Febrero', 'year' => null, 'amount' => null, 'note' => null],
+            'March' => ['month' => 'Marzo', 'year' => null, 'amount' => null, 'note' => null],
+            'April' => ['month' => 'Abril', 'year' => null, 'amount' => null, 'note' => null],
+            'May' => ['month' => 'Mayo', 'year' => null, 'amount' => null, 'note' => null],
+            'June' => ['month' => 'Junio', 'year' => null, 'amount' => null, 'note' => null],
+            'July' => ['month' => 'Julio', 'year' => null, 'amount' => null, 'note' => null],
+            'August' => ['month' => 'Agosto', 'year' => null, 'amount' => null, 'note' => null],
+            'September' => ['month' => 'Septiembre', 'year' => null, 'amount' => null, 'note' => null],
+            'October' => ['month' => 'Octubre', 'year' => null, 'amount' => null, 'note' => null],
+            'November' => ['month' => 'Noviembre', 'year' => null, 'amount' => null, 'note' => null],
+            'December' => ['month' => 'Diciembre', 'year' => null, 'amount' => null, 'note' => null],
+        ];
+
+        $numberOfMonths = $startDate->diffInMonths($endDate) + 1;
+
+        if ($numberOfMonths === 1) {
+            $monthName = $startDate->format('F');
+            $months[$monthName]['year'] = $startDate->year;
+            $months[$monthName]['amount'] = $payment->amount;
+            $months[$monthName]['note'] = $payment->note;
+        }
+
+      
+        $note = $payment->note;
+
+        $message = $numberOfMonths > 1
+            ? "Monto total del pago $" . number_format($payment->amount, 2) . 
+            ". Nota: " . $note
+            : null;
+
+        $pdf = PDF::loadView('reports.receiptPayment', compact('payment', 'months', 'message'))
+            ->setPaper([0, 0, 300, 500], 'portrait');
+
+        return $pdf->stream();
+    }
+
 }

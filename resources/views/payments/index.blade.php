@@ -85,6 +85,10 @@
                                                                     <i class="fas fa-trash-alt"></i>
                                                                 </button>
                                                                 @endcan
+                                                                <a type="button" class="btn btn-block bg-gradient-secondary mr-2" target="_blank" title="Generar Perfil"
+                                                                    href="{{ route('reports.receiptPayment', Crypt::encrypt($payment->id)) }}">
+                                                                    <i class="fas fa-file-invoice"></i>
+                                                                    </a>
                                                             </div>
                                                         </td>
                                                         @include('payments.delete')
