@@ -109,16 +109,28 @@
                                         <input type="text" disabled class="form-control" value="{{ $customer->has_water_pressure ? 'Día si noche no' : 'Noche si día no' }}" />
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>¿Tiene Cisterna?</label>
                                         <input type="text" disabled class="form-control" value="{{ $customer->has_cistern ? 'Sí' : 'No' }}" />
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Costo</label>
                                         <input type="text" disabled class="form-control" value="{{ $customer->cost->category ?? 'NULL' }} - {{ $customer->cost->price ?? 'null'}}" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <input type="text" disabled class="form-control" value="{{ $customer->status ? 'Con vida' : 'Fallecido' }}" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Nombre de la persona que será responsable sin el Titular Fallecido</label>
+                                        <input type="text" disabled class="form-control"  placeholder="Nombre de la persona responsable si el titular fallecio"value="{{ $customer->responsible_name }}" />
                                     </div>
                                 </div>
                             </div>

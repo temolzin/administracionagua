@@ -192,6 +192,7 @@ class PaymentController extends Controller
         $decryptedId = Crypt::decrypt($paymentId);
         $payment = Payment::findOrFail($decryptedId);
         $debt = $payment->debt;
+        $client = $debt->client;
 
         $startDate = Carbon::parse($debt->start_date);
         $endDate = Carbon::parse($debt->end_date);
@@ -222,7 +223,6 @@ class PaymentController extends Controller
 
       
         $note = $payment->note;
-
         $message = $numberOfMonths > 1
             ? "Monto total del pago $" . number_format($payment->amount, 2) . 
             ". Nota: " . $note

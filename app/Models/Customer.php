@@ -35,6 +35,8 @@ class Customer extends Model implements HasMedia
         'has_water_pressure',
         'has_cistern',
         'cost_id',
+        'status',
+        'responsible_name',
     ];
 
     public $timestamps = false;

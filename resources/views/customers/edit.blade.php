@@ -141,7 +141,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="hasCisternUpdate" class="form-label">¿Tiene cisterna?</label>
                                             <select class="form-control" id="hasCisternUpdate" name="hasCisternUpdate" required>
@@ -151,7 +151,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-5">
                                         <div class="form-group">
                                             <label for="costIdUpdate" class="form-label">Costo(*)</label>
                                             <select class="form-control" id="costIdUpdate" name="costIdUpdate" required>
@@ -162,6 +162,24 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="status" class="form-label">Estado del titular(*)</label>
+                                            <select class="form-control" id="statusUpdate" name="statusUpdate">
+                                                <option value="">Selecciona una opción</option>
+                                                <option value="1" {{ $customer->status == 1 ? 'selected' : '' }}>Con Vida</option>
+                                                <option value="0" {{ $customer->status == 0 ? 'selected' : '' }}>Fallecido</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12" id="responsibleNameUpdate">
+                                        <div class="form-group">
+                                            <label for="responsibleNameUpdate" class="form-label">Nombre de la persona que será responsable</label>
+                                            <input type="text" class="form-control" name="responsibleNameUpdate" 
+                                            placeholder="Nombre de la persona responsable si el titular fallecio, si no hay dejalo vacio"  id="responsibleNameUpdate" value="{{ $customer->responsible_name }}">
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
