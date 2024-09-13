@@ -41,11 +41,6 @@ class Customer extends Model implements HasMedia
 
     public $timestamps = false;
 
-    const STATUS_DEAD='dead';
-    const STATUS_ALIVE ='alive';
-
-    const STATUS = [self::STATUS_DEAD, self::STATUS_ALIVE];
-
     public function Cost()
     {
         return $this->belongsTo(Cost::class);
