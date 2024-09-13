@@ -30,7 +30,7 @@
                     </div>
                     @if ($data['noDebtsForCurrentMonth'])
                         <div class="alert alert-warning" role="alert">
-                            Ya ha iniciado un nuevo mes y no se han asignado deudas a los clientes para este periodo.
+                            Ya ha iniciado un nuevo mes y no se han asignado deudas a los Usuarios para este periodo.
                         </div>
                     @endif
 
@@ -51,7 +51,7 @@
                             <div class="small-box bg-green">
                                 <div class="inner">
                                     <h3>{{ $data['customersWithoutDebts'] }}</h3>
-                                    <p>Clientes al día</p>
+                                    <p>Usuarios al día</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fas fa-check-circle"></i>
@@ -63,7 +63,7 @@
                             <div class="small-box bg-red">
                                 <div class="inner">
                                     <h3>{{ $data['customersWithDebts'] }}</h3>
-                                    <p>Clientes con Deudas</p>
+                                    <p>Usuarios con Deudas</p>
                                 </div>
                                 <div class="icon">
                                     <i class="fas fa-exclamation-circle"></i>

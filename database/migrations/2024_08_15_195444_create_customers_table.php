@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Costs;
+use App\Models\Customer;
 
 class CreateCustomersTable extends Migration
 {
@@ -32,6 +33,8 @@ class CreateCustomersTable extends Migration
             $table->integer('water_days');
             $table->boolean('has_water_pressure');
             $table->boolean('has_cistern');
+            $table->boolean('status');
+            $table->string('responsible_name')->nullable();
             $table->softDeletes();
           
             $table->foreign('cost_id')->references('id')->on('costs')->onDelete('cascade');

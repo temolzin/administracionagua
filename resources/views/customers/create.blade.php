@@ -142,7 +142,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="has_cistern" class="form-label">¿Tiene cisterna?</label>
                                             <select class="form-control" id="has_cistern" name="has_cistern" required>
@@ -152,7 +152,7 @@
                                             </select>
                                         </div>
                                     </div>  
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-5">
                                         <div class="form-group">
                                             <label for="cost" class="form-label">Costo</label>
                                             <select class="form-control" name="cost_id" id="cost" required>
@@ -164,7 +164,23 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>                                                                   
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label for="status" class="form-label">Estado del titular(*)</label>
+                                            <select class="form-control" id="status" name="status" required onchange="toggleResponsibleField()">
+                                                <option value="">Selecciona una opción</option>
+                                                <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Con Vida</option>
+                                                <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Fallecido</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12" id="responsible_field" style="display: none;">
+                                        <div class="form-group">
+                                            <label for="responsible_name" class="form-label">Nombre de la persona que será responsable de la toma</label>
+                                            <input type="text" class="form-control" id="responsible_name" name="responsible_name" placeholder="Ingresa nombre de la persona responsable, si no hay dejalo vacio" value="{{ old('responsible_name') }}" />
+                                        </div>
+                                    </div>                                                                                             
                                 </div>
                             </div>
                         </div>
@@ -190,5 +206,15 @@
     reader.readAsDataURL(event.target.files[0]);
 }
 
+    function toggleResponsibleField() {
+        var statusSelect = document.getElementById('status');
+        var responsibleField = document.getElementById('responsible_field');
+
+        if (statusSelect.value == '0') {
+            responsibleField.style.display = 'block';
+        } else {
+            responsibleField.style.display = 'none';
+        }
+    }
 </script>
 

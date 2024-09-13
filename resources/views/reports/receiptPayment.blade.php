@@ -89,10 +89,21 @@
                 <tr>
                     <td class="header">PAGO POR MES:</td>
                     <td class="header">MZ: {{ $payment->debt->customer->block}}</td>
-                    <td class="header-cell">REGISTRO: holaaa</td>
+                    <td class="header-cell">REGISTRO:    </td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="header">C: {{ $payment->debt->customer->name ?? 'Desconocido' }} {{ $payment->debt->customer->last_name ?? 'Desconocido' }}</td>
+                    <td colspan="2" class="header">
+                        C: 
+                        @if ($payment->debt->customer->status == '0')
+                            {{ $payment->debt->customer->name ?? 'Desconocido' }} 
+                            {{ $payment->debt->customer->last_name ?? 'Desconocido' }} 
+                            (Pago realizado por: {{ $payment->debt->customer->responsible_name ?? 'Desconocido' }})
+                        @else
+                            {{ $payment->debt->customer->name ?? 'Desconocido' }} 
+                            {{ $payment->debt->customer->last_name ?? 'Desconocido' }}
+                        @endif
+                    </td>
+                    
                     <td class="folio">FOLIO:</td>
                 </tr>
                 <tr>
