@@ -51,10 +51,22 @@
                                             <input type="text" class="form-control" name="phoneUpdate" id="phoneUpdate" value="{{ $user->phone }}" >
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="emailUpdate" class="form-label">Email (*)</label>
                                             <input type="email" class="form-control" name="emailUpdate" id="emailUpdate" value="{{ $user->email }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="roles" class="form-label">Seleccionar Rol(*)</label>
+                                            <select name="roles[]" id="roles" class="form-control select2" required>
+                                                @foreach($roles as $role)
+                                                    <option value="{{ $role->id }}" {{ $user->roles->contains($role->id) ? 'selected' : '' }}>
+                                                        {{ $role->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

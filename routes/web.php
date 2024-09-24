@@ -29,11 +29,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 });
 
-Route::get('/annual-earnings-report/{year}', [PaymentController::class, 'annualEarningsReport']);
 Route::get('customers/pdfCustomers', [CustomerController::class, 'pdfCustomers'])->name('customers.pdfCustomers');
-Route::get('/report/current-customers', [CustomerController::class, 'reportCurrentCustomers'])->name('report.current-customers');
-Route::get('/customers-with-debts', [CustomerController::class, 'customersWithDebts'])->name('report.with-debts');
-
 
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
@@ -60,11 +56,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('payments', PaymentController::class);
 
     Route::get('/getCustomerDebts', [PaymentController::class, 'getCustomerDebts'])->name('getCustomerDebts');
-    
-    Route::post('/users/{user}/updateRole', [UserController::class, 'updateRole'])->name('users.updateRole');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('dashboard', DashboardController::class);
 
     Route::get('/receipt-payment/{id}', [PaymentController::class, 'receiptPayment'])->name('reports.receiptPayment');
+
+    Route::put('/users/{id}/updatePassword', [UserController::class, 'updatePassword'])->name('users.updatePassword');
+
+    Route::get('/annual-earnings-report/{year}', [PaymentController::class, 'annualEarningsReport']);
+    Route::get('/report/current-customers', [CustomerController::class, 'reportCurrentCustomers'])->name('report.current-customers');
+    Route::get('/customers-with-debts', [CustomerController::class, 'customersWithDebts'])->name('report.with-debts');
 });
