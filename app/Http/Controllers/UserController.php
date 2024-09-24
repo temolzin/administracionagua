@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
@@ -13,7 +14,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users.index', compact('users'));
+        $roles = Role::all();
+        return view('users.index', compact('users', 'roles'));
     }
 
     public function store(Request $request)
@@ -23,6 +25,8 @@ class UserController extends Controller
 
         $user = User::create($userData);
 
+       $user->roles()->sync($request->input('roles'));
+       
         if ($request->hasFile('photo')) {
             $user->addMediaFromRequest('photo')->toMediaCollection('userGallery');
         }
@@ -48,6 +52,10 @@ class UserController extends Controller
                 $user->addMediaFromRequest('photo')->toMediaCollection('userGallery');
             }
 
+            if ($request->has('roles')) {
+                $user->roles()->sync($request->input('roles'));
+            }
+
             return redirect()->route('users.index')->with('success', 'Usuario actualizado correctamente.');
         }
 
@@ -71,11 +79,18 @@ class UserController extends Controller
         $roles = Role::all();
         return view('users.assignRole', compact('user', 'roles'));
     }
-    
 
-    public function updateRole(Request $request, User $user)
+    public function updatePassword(Request $request, $id)
     {
-        $user->roles()->sync($request->roles);
-        return redirect()->route('users.index')->with('success', 'Roles asignados correctamente');
+        $request->validate([
+            'newPassword' => 'required|min:8',
+        ]);
+        $user = User::findOrFail($id);
+
+        $user->password = Hash::make($request->newPassword);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Contraseña actualizada correctamente');
     }
+
 }

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Usuarios')
+@section('title', 'Administradores')
 
 @section('content')
 <section class="content">
@@ -8,7 +8,7 @@
         <div class="col-md-12 col-sm-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Usuarios</h2>
+                    <h2>Administradores</h2>
                     <div class="row">
                         <div class="col-lg-12 text-right">
                             <button class="btn btn-success" data-toggle='modal' data-target="#create">
@@ -66,15 +66,16 @@
                                                             <button type="button" class="btn btn-danger mr-2" data-toggle="modal" title="Eliminar Registro" data-target="#delete{{ $user->id }}">
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </button>
-                                                            <a type="button" class="permiso btn btn-secondary mr-2" title="Asignar Rol" href="{{ route('users.edit', Crypt::encrypt($user->id)) }}">
-                                                                <i class="fa fa-key"></i>
-                                                            </a>
+                                                            <button type="button" class="btn btn-secondary mr-2" data-toggle="modal" title="Eliminar Registro" data-target="#UpdatePassword{{ $user->id }}">
+                                                                <i class="fas fa-lock"></i>
+                                                            </button>
                                                         </div>
                                                     </td>
                                                 </tr>
                                                 @include('users.edit')
                                                 @include('users.delete')
                                                 @include('users.show')
+                                                @include('users.passwordEdit')
                                             @endforeach
                                         @endif
                                     </tbody>

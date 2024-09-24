@@ -312,7 +312,7 @@ return [
             'icon' => 'fa fa-home',
         ],
         [
-            'text' => 'Usuarios',
+            'text' => 'Administradores',
             'url' => '/users',
             'icon' => 'fas fa-fw fa-user',
              'can'  =>'viewUser'

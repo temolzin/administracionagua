@@ -44,19 +44,29 @@
                                             <input type="text" class="form-control" name="last_name" placeholder="Ingresa apellido(s)" value="{{ old('last_name') }}" required />
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="email" class="form-label">Email(*)</label>
                                             <input type="email" class="form-control" name="email" placeholder="Ingresa email" value="{{ old('email') }}" required />
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="phone" class="form-label">Teléfono(*)</label>
                                             <input type="text" class="form-control" name="phone" placeholder="Ingresa número de teléfono" value="{{ old('phone') }}"/>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="role" class="form-label">Seleccionar Rol(*)</label>
+                                            <select name="roles[]" id="roles" class="form-control" required>
+                                                @foreach($roles as $role)
+                                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                                @endforeach
+                                            </select>                                                                                                                                  
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="password" class="form-label">Contraseña(*)</label>
                                             <div class="input-group">
