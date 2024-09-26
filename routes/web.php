@@ -67,4 +67,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/annual-earnings-report/{year}', [PaymentController::class, 'annualEarningsReport']);
     Route::get('/report/current-customers', [CustomerController::class, 'reportCurrentCustomers'])->name('report.current-customers');
     Route::get('/customers-with-debts', [CustomerController::class, 'customersWithDebts'])->name('report.with-debts');
+
+    Route::get('/debt-customers', [DashboardController::class, 'getDebtCustomers'])->name('debt.customers');
+
 });

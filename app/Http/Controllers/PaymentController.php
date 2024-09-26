@@ -198,18 +198,19 @@ class PaymentController extends Controller
         $endDate = Carbon::parse($debt->end_date);
 
         $months = [
-            'January' => ['month' => 'Enero', 'year' => null, 'amount' => null, 'note' => null],
-            'February' => ['month' => 'Febrero', 'year' => null, 'amount' => null, 'note' => null],
-            'March' => ['month' => 'Marzo', 'year' => null, 'amount' => null, 'note' => null],
-            'April' => ['month' => 'Abril', 'year' => null, 'amount' => null, 'note' => null],
-            'May' => ['month' => 'Mayo', 'year' => null, 'amount' => null, 'note' => null],
-            'June' => ['month' => 'Junio', 'year' => null, 'amount' => null, 'note' => null],
-            'July' => ['month' => 'Julio', 'year' => null, 'amount' => null, 'note' => null],
-            'August' => ['month' => 'Agosto', 'year' => null, 'amount' => null, 'note' => null],
-            'September' => ['month' => 'Septiembre', 'year' => null, 'amount' => null, 'note' => null],
-            'October' => ['month' => 'Octubre', 'year' => null, 'amount' => null, 'note' => null],
-            'November' => ['month' => 'Noviembre', 'year' => null, 'amount' => null, 'note' => null],
-            'December' => ['month' => 'Diciembre', 'year' => null, 'amount' => null, 'note' => null],
+            'January' => ['month' => 'ENERO', 'year' => null, 'amount' => null, 'note' => null],
+            'February' => ['month' => 'FEBRERO', 'year' => null, 'amount' => null, 'note' => null],
+            'March' => ['month' => 'MARZO', 'year' => null, 'amount' => null, 'note' => null],
+            'April' => ['month' => 'ABRIL', 'year' => null, 'amount' => null, 'note' => null],
+            'May' => ['month' => 'MAYO', 'year' => null, 'amount' => null, 'note' => null],
+            'June' => ['month' => 'JUNIO', 'year' => null, 'amount' => null, 'note' => null],
+            'July' => ['month' => 'JULIO', 'year' => null, 'amount' => null, 'note' => null],
+            'August' => ['month' => 'AGOSTO', 'year' => null, 'amount' => null, 'note' => null],
+            'September' => ['month' => 'SEPTIEMBRE', 'year' => null, 'amount' => null, 'note' => null],
+            'October' => ['month' => 'OCTUBRE', 'year' => null, 'amount' => null, 'note' => null],
+            'November' => ['month' => 'NOVIEMBRE', 'year' => null, 'amount' => null, 'note' => null],
+            'December' => ['month' => 'DICIEMBRE', 'year' => null, 'amount' => null, 'note' => null],
+            'newTake' => ['month' => 'NUEVA TOMA', 'year' => null, 'amount' => null, 'note' => null],
         ];
 
         $numberOfMonths = $startDate->diffInMonths($endDate) + 1;
@@ -221,14 +222,17 @@ class PaymentController extends Controller
             $months[$monthName]['note'] = $payment->note;
         }
 
-      
+        $numberToWords = new \NumberToWords\NumberToWords();
+        $numberTransformer = $numberToWords->getNumberTransformer('es');
+        $amountInWords = $numberTransformer->toWords($payment->amount);
+
         $note = $payment->note;
         $message = $numberOfMonths > 1
             ? "Monto total del pago $" . number_format($payment->amount, 2) . 
             ". Nota: " . $note
             : null;
 
-        $pdf = PDF::loadView('reports.receiptPayment', compact('payment', 'months', 'message'))
+        $pdf = PDF::loadView('reports.receiptPayment', compact('payment', 'months', 'message',  'amountInWords'))
             ->setPaper([0, 0, 300, 500], 'portrait');
 
         return $pdf->stream();

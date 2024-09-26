@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
@@ -24,6 +25,15 @@ class DashboardController extends Controller
         $customersWithoutDebts = Customer::whereDoesntHave('debts', function ($query) {
             $query->where('status', '!=', 'paid');
         })->count();
+
+        $debtOverThreeYearsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
+            ->join('debts', 'customers.id', '=', 'debts.customer_id')
+            ->selectRaw('SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date)) as total_months')
+            ->groupBy('customers.id', 'customers.name', 'customers.last_name')
+            ->havingRaw('total_months > ?', [36])
+            ->paginate(10);
+
+        $debtOverThreeYears = $debtOverThreeYearsAll->take(5);
 
         $currentMonth = Carbon::now();
         $debtsThisMonth = Debt::whereYear('start_date', $currentMonth->year)
@@ -53,10 +63,25 @@ class DashboardController extends Controller
             'customersWithDebts' => $customersWithDebts,
             'customersWithoutDebts' => $customersWithoutDebts,
             'noDebtsForCurrentMonth' => $noDebtsForCurrentMonth,
+            'debtOverThreeYears' => $debtOverThreeYears,
+            'debtOverThreeYearsAll' => $debtOverThreeYearsAll,
             'months' => $months,
             'earningsPerMonth' => array_values($earningsPerMonth),
         ];
 
         return view('dashboard', compact('data', 'authUser'));
     }
+
+    public function getDebtCustomers(Request $request)
+    {
+        $debtOverThreeYearsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
+            ->join('debts', 'customers.id', '=', 'debts.customer_id')
+            ->selectRaw('SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date)) as total_months')
+            ->groupBy('customers.id', 'customers.name', 'customers.last_name')
+            ->havingRaw('total_months > ?', [36])
+            ->get();
+    
+        return response()->json(['data' => $debtOverThreeYearsAll]);
+    }
+    
 }
