@@ -11,8 +11,8 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #f0f8ff;
-            color: #0a072e;
+            background-color: rgba(219, 234, 230, 0.867);
+            color: #1a177c;
             font-family: Arial, sans-serif;
         }
 
@@ -20,12 +20,10 @@
             margin: 5;
             padding: 10;
         }
-        .recibo-header {
-            display: flex;
-            align-items: center;
+        .recibo-header td, th, td{
             text-align: center;
-            margin: 0;
-            font-size: 9px;
+            border: 0px  rgba(219, 234, 230, 0.867);
+            
         }
 
         .recibo-table, table {
@@ -37,7 +35,7 @@
         }
 
         .recibo-table td, th, td {
-            border: 2px solid #0e0c4f;
+            border: 2px solid #1a177c;
             padding: 5px;
             text-align: center;
             font-size: 7px;
@@ -72,24 +70,31 @@
 </head>
 <body>
     <div class="recibo">
-        <header class="recibo-header">
-            <div class="logo">
-            </div>
-            <div class="title">
-                <h2>COMITÉ DEL SISTEMA DE AGUA POTABLE
-                DE SANTIAGO TOLMAN A.C.
-                OTUMBA, MÉXICO</h2>
-            </div>
-            <div class="logo">
-            </div>
-        </header>
+        
+            <table class="recibo-header" width="100%">
+                <tr>
+                    <td class="logo">
+                        <img src="img/logoUno.png" alt="Logo 1" width="60px">
+                    </td>
+                    <td>
+                        <h2>COMITÉ DEL SISTEMA DE AGUA POTABLE<br>
+                        DE SANTIAGO TOLMAN A.C.<br>
+                        OTUMBA, MÉXICO</h2>
+                    </td>
+                    <td class="logo">
+                        <img src="img/logoDos.png" alt="Logo 2" width="60px">
+                    </td>
+                </tr>
+            </table>
+      
+
         <div class="recibo-container">
             <table class="recibo-table">
                 
                 <tr>
                     <td class="header">PAGO POR MES:</td>
                     <td class="header">MZ: {{ $payment->debt->customer->block}}</td>
-                    <td class="header-cell">REGISTRO:    </td>
+                    <td class="header-cell">REGISTRO: {{ $payment->debt->customer->id}}   </td>
                 </tr>
                 <tr>
                     <td colspan="2" class="header">
@@ -104,7 +109,7 @@
                         @endif
                     </td>
                     
-                    <td class="folio">FOLIO:</td>
+                    <td class="folio">FOLIO</td>
                 </tr>
                 <tr>
                     <td colspan="2" class="header">CON DOMICILIO: Calle. {{ $payment->debt->customer->street}}, # {{ $payment->debt->customer->interior_number ?? 'S/N'}}, Col. Santiago Tolman, Otumba</td>
@@ -114,8 +119,8 @@
                     <td colspan="2" class="header">BUENO POR: $ {{ $payment->amount }}</td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="header">CANTIDAD CON LETRA POR LOS SIGUIENTES CONCEPTOS:</td>
-                </tr>
+                    <td colspan="3" class="header">CANTIDAD CON LETRA POR LOS SIGUIENTES CONCEPTOS: {{ $amountInWords }}</td>
+                </tr> 
             </table>
         </div>
         <div class="recibo-container">
@@ -148,7 +153,7 @@
             </div>
         @endif
         <footer class="recibo-footer">  
-            <p>SANTIAGO TOLMAN A: {{ \Carbon\Carbon::parse($payment->payment_date)->locale('es')->isoFormat('D [de]MMMM [del] YYYY')}}</p>
+            <p>SANTIAGO TOLMAN A: {{ \Carbon\Carbon::parse($payment->payment_date)->locale('es')->isoFormat('D [de] MMMM [del] YYYY')}}</p>
              <br><br> 
             _______________________________________________
             <p>COMITE DEL SISTEMA DE AGUA POTABLE</p>

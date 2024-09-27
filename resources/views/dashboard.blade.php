@@ -28,6 +28,7 @@
                             </div>
                         </div>
                     </div>
+
                     @if ($data['noDebtsForCurrentMonth'])
                         <div class="alert alert-warning" role="alert">
                             Ya ha iniciado un nuevo mes y no se han asignado deudas a los Usuarios para este periodo.
@@ -47,6 +48,7 @@
                                 <a href="{{ route('customers.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
+
                         <div class="col-lg-4 col-xs-6">
                             <div class="small-box bg-green">
                                 <div class="inner">
@@ -59,6 +61,7 @@
                                 <a href="{{ route('customers.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
+
                         <div class="col-lg-4 col-xs-6">
                             <div class="small-box bg-red">
                                 <div class="inner">
@@ -72,7 +75,51 @@
                             </div>
                         </div>
                     </div>
-                    
+
+                    @include('customers.customerWhitDebs')
+
+                    <div class="col-md-12 p-1">
+                        <div class="card card-success">
+                            <div class="card-header" style="background-color:#9b1010; color:white;">
+                                <h3 class="card-title">Clientes con Deuda Mayor a 3 Años</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body p-1">
+                                <table id="customers" class="table table-striped display responsive nowrap" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Apellido</th>
+                                            <th>Meses de Deuda</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($data['debtOverThreeYears'] as $key => $customer)
+                                            @if ($key < 5)
+                                                <tr>
+                                                    <td>{{ $customer->name }}</td>
+                                                    <td>{{ $customer->last_name }}</td>
+                                                    <td>{{ $customer->total_months }} meses</td>
+                                                </tr>
+                                            @else
+                                                @break
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#allCustomersModal">
+                                    Ver Todos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card">
@@ -106,11 +153,48 @@
 @stop
 
 @section('js')
+    @include('language.datatables_language')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        $('#allCustomersModal').on('show.bs.modal', function () {
+            $.ajax({
+                url: '{{ route('debt.customers') }}',
+                type: 'GET',
+                success: function(response) {
+                    let tableBody = $('#customersWhitDebts tbody');
+                    tableBody.empty();
+                    response.data.forEach(function(customer) {
+                        tableBody.append(`
+                            <tr>
+                                <td>${customer.name}</td>
+                                <td>${customer.last_name}</td>
+                                <td>${customer.total_months} meses</td>
+                            </tr>
+                        `);
+                    });
+
+                    if ($.fn.DataTable.isDataTable('#customersWhitDebts')) {
+                        $('#customersWhitDebts').DataTable().clear().destroy();
+                    }
+
+                    $('#customersWhitDebts').DataTable({
+                        responsive: true,
+                        pageLength: 10,
+                        buttons: ['excel', 'pdf', 'print'],
+                        dom: 'Bfrtip',
+                        destroy: true,
+                        language: idiomaDataTable,
+                    });
+                },
+                error: function() {
+                    alert('Error al cargar los datos de clientes.');
+                }
+            });
+        });
+
         var ctx = document.getElementById('earningsChart').getContext('2d');
         var earningsChart = new Chart(ctx, {
-            type: 'bar', 
+            type: 'bar',
             data: {
                 labels: @json($data['months']),
                 datasets: [{

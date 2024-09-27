@@ -92,12 +92,14 @@
 @endsection
 
 @section('js')
+@include('language.datatables_language')
 <script>
     $(document).ready(function() {
         $('#users').DataTable({
             responsive: true,
             buttons: ['excel', 'pdf', 'print'],
             dom: 'Bfrtip',
+            language: idiomaDataTable,
         });
 
         var successMessage = "{{ session('success') }}";
