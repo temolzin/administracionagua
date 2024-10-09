@@ -12,7 +12,9 @@
                 @csrf
                 @method('DELETE')
                 <div class="modal-body text-center text-danger">
-                    ¿Estás seguro de eliminar el rol <strong>{{ $role->name }}?</strong>
+                    ¿Estás seguro de eliminar el rol <strong>{{ $role->name }}?, Sí lo eliminas los Administradores que estan asociados a el
+                        se quedaran sin acceso a los modulos.
+                    </strong>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
