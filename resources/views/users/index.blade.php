@@ -66,7 +66,7 @@
                                                             <button type="button" class="btn btn-danger mr-2" data-toggle="modal" title="Eliminar Registro" data-target="#delete{{ $user->id }}">
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </button>
-                                                            <button type="button" class="btn btn-secondary mr-2" data-toggle="modal" title="Eliminar Registro" data-target="#UpdatePassword{{ $user->id }}">
+                                                            <button type="button" class="btn btn-secondary mr-2" data-toggle="modal" title="Cambiar Contraseña" data-target="#UpdatePassword{{ $user->id }}">
                                                                 <i class="fas fa-lock"></i>
                                                             </button>
                                                         </div>
