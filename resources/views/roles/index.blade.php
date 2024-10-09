@@ -51,10 +51,6 @@
                                                                href="{{ route('roles.edit', $role) }}">
                                                                 <i class="fas fa-edit"></i>
                                                             </a>
-                                                            <button type="button" class="btn btn-danger mr-2" data-toggle="modal"
-                                                                    title="Eliminar Registro" data-target="#delete{{ $role->id }}">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </button>
                                                         </div>
                                                     </td>
                                                     @include('roles.delete')

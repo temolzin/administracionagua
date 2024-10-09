@@ -173,10 +173,6 @@
                         `);
                     });
 
-                    if ($.fn.DataTable.isDataTable('#customersWhitDebts')) {
-                        $('#customersWhitDebts').DataTable().clear().destroy();
-                    }
-
                     $('#customersWhitDebts').DataTable({
                         responsive: true,
                         pageLength: 10,

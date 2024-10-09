@@ -13,6 +13,7 @@
                 @method('DELETE')
                 <div class="modal-body text-center text-danger">
                     ¿Estás seguro de eliminar este pago de <strong>${{ $payment->amount }}?
+                    Este pago seguira reflejado en la deuda.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

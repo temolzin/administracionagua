@@ -128,10 +128,10 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Mes</th>
-                        <th>Año</th>
-                        <th>Monto</th>
-                        <th>Observaciones</th>
+                        <th>MES</th>
+                        <th>AÑO</th>
+                        <th>MONTO</th>
+                        <th>OBSERVACIONES</th>
                     </tr>
                 </thead>
                 <tbody>
