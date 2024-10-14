@@ -69,9 +69,11 @@
                                             <td>{{ $customer->has_water_connection ? 'SI' : 'NO' }}</td>
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="Opciones">
+                                                    @can('viewCustomers')
                                                     <button type="button" class="btn btn-info mr-2" data-toggle="modal" title="Ver Detalles" data-target="#view{{$customer->id}}">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
+                                                    @endcan
                                                     @can('editCustomer')
                                                     <button type="button" class="btn btn-warning mr-2" data-toggle="modal" title="Editar Datos" data-target="#edit{{$customer->id}}">
                                                         <i class="fas fa-edit"></i>
