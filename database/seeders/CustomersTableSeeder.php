@@ -39,7 +39,8 @@ class CustomersTableSeeder extends Seeder
                 'has_water_pressure' => $faker->boolean,
                 'has_cistern' => $faker->boolean,
                 'has_cistern' => $faker->boolean,
-                'status' => $faker->boolean, 
+                'status' => $faker->boolean,
+                'observation' => $faker->text,
             ]);
         }
     }

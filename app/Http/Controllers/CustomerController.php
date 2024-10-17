@@ -58,6 +58,7 @@ class CustomerController extends Controller
             $customer->has_cistern = $request->input('hasCisternUpdate');
             $customer->cost_id = $request->input('costIdUpdate');
             $customer->status = $request->input('statusUpdate');
+            $customer->observation = $request->input('observationUpdate');
             $customer->responsible_name = $request->input('responsibleNameUpdate');
 
             $customer->save();
