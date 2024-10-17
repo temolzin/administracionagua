@@ -34,6 +34,7 @@ class CreateCustomersTable extends Migration
             $table->boolean('has_water_pressure');
             $table->boolean('has_cistern');
             $table->boolean('status');
+            $table->string('observation')->nullable();
             $table->string('responsible_name')->nullable();
             $table->softDeletes();
           

@@ -180,7 +180,13 @@
                                             <label for="responsible_name" class="form-label">Nombre de la persona que será responsable de la toma</label>
                                             <input type="text" class="form-control" id="responsible_name" name="responsible_name" placeholder="Ingresa nombre de la persona responsable, si no hay dejalo vacio" value="{{ old('responsible_name') }}" />
                                         </div>
-                                    </div>                                                                                             
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label for="observation" class="form-label">Nota </label>
+                                            <textarea class="form-control" name="observation" placeholder="Ingresa una nota" value="{{ old('observation') }}"></textarea>
+                                        </div>
+                                    </div>                                                                                            
                                 </div>
                             </div>
                         </div>
