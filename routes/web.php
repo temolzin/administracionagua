@@ -9,6 +9,7 @@ use App\Http\Controllers\CostController;
 use App\Http\Controllers\DebtController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,5 +70,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/customers-with-debts', [CustomerController::class, 'customersWithDebts'])->name('report.with-debts');
 
     Route::get('/debt-customers', [DashboardController::class, 'getDebtCustomers'])->name('debt.customers');
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile/update', [ProfileController::class, 'profileUpdate'])->name('profile.update');
+    Route::post('/profile/editImage', [ProfileController::class, 'updateImage'])->name('profile.update.image');
+    Route::put('/profile/updatePassword', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 
 });
