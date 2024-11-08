@@ -43,4 +43,31 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public function adminlte_image()
+    {
+        $imageUrl = $this->getFirstMediaUrl('userGallery');
+        return $imageUrl ? $imageUrl : 'img/userDefault.png';
+    }
+
+    public function adminlte_desc()
+    {
+        if ($this->hasRole('Admin')) {
+            return 'Administrador';
+        }
+    
+        if ($this->hasAnyRole('secretariat')) {
+            return 'Secretaria';
+        }
+    
+        return 'Usuario Registrado';
+    }
+
+    public function adminlte_profile_url()
+    {
+        return 'profile';
+    }
+    
+    
+    
 }
