@@ -12,12 +12,16 @@
                         <div class="row">
                             @include('payments.create')
                             @include('payments.annualEarnings')
+                            @include('payments.weeklyEarnings')
                             <div class="col-lg-12 text-right">
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createPayment">
                                     <i class="fa fa-plus"></i> Registrar Pago
                                 </button>
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#annualEarnings">
                                     <i class="fa fa-dollar-sign"></i> Ganancias Anuales
+                                </button>
+                                <button type="button" class="btn bg-olive" data-toggle="modal" target="_blank"  data-target="#weeklyEarnings">
+                                    <i class="fa fa-dollar-sign"></i> Ganancias Semanales
                                 </button>
                                 <a type="button" class="btn btn-secondary" target="_blank" title="Customers" href="{{ route('report.current-customers') }}">
                                     <i class="fas fa-users"></i> Clientes al día

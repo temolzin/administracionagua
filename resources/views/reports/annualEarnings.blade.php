@@ -50,12 +50,12 @@
             font-size: 16px;
         }
         th {
-            background-color: #6c757d;
+            background-color: #0B1C80;
             color: white;
         }
         tfoot td {
             font-weight: bold;
-            background-color: #343a40;
+            background-color: #76798a;
             color: white;
         }
     </style>
