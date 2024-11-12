@@ -59,8 +59,8 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="interior_number" class="form-label">Número Interior(*)</label>
-                                            <input type="text" class="form-control" id="interior_number" name="interior_number" placeholder="Ingresa número interior" value="{{ old('interior_number') }}" required />
+                                            <label for="interior_number" class="form-label">Número Interior</label>
+                                            <input type="text" class="form-control" id="interior_number" name="interior_number" placeholder="Ingresa número interior" value="{{ old('interior_number') }}" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -68,8 +68,10 @@
                                             <label for="marital_status" class="form-label">Estado Civil(*)</label>
                                             <select class="form-control" id="marital_status" name="marital_status" required>
                                                 <option value="">Selecciona una opción</option>
-                                                <option value="1" {{ old('marital_status') == '1' ? 'selected' : '' }}>Casado</option>
-                                                <option value="0" {{ old('marital_status') == '0' ? 'selected' : '' }}>Soltero</option>
+                                                <option value="Casado/a" {{ old('marital_status') == 'Casado/a' ? 'selected' : '' }}>Casado/a</option>
+                                                <option value="Soltero/a" {{ old('marital_status') == 'Soltero/a' ? 'selected' : '' }}>Soltero/a</option>
+                                                <option value="Divorciado" {{ old('marital_status') == 'Divorciado' ? 'selected' : '' }}>Divorciado/a</option>
+                                                <option value="Viudo/a" {{ old('marital_status') == 'Viudo/a' ? 'selected' : '' }}>Viudo/a</option>
                                             </select>
                                         </div>
                                     </div>                                    
@@ -82,7 +84,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="has_water_connection" class="form-label">¿Tiene Toma de agua?</label>
-                                            <select class="form-control" id="has_water_connection" name="has_water_connection" required>
+                                            <select class="form-control" id="has_water_connection" name="has_water_connection">
                                                 <option value="">Selecciona una opción</option>
                                                 <option value="1" {{ old('has_water_connection') == '1' ? 'selected' : '' }}>Sí</option>
                                                 <option value="0" {{ old('has_water_connection') == '0' ? 'selected' : '' }}>No</option>
@@ -92,7 +94,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="has_store" class="form-label">¿Tiene local?</label>
-                                            <select class="form-control" id="has_store" name="has_store" required>
+                                            <select class="form-control" id="has_store" name="has_store">
                                                 <option value="">Selecciona una opción</option>
                                                 <option value="1" {{ old('has_store') == '1' ? 'selected' : '' }}>Sí</option>
                                                 <option value="0" {{ old('has_store') == '0' ? 'selected' : '' }}>No</option>
@@ -102,7 +104,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="has_all_payments" class="form-label">¿Está al día?</label>
-                                            <select class="form-control" id="has_all_payments" name="has_all_payments" required>
+                                            <select class="form-control" id="has_all_payments" name="has_all_payments">
                                                 <option value="">Selecciona una opción</option>
                                                 <option value="1" {{ old('up_to_date') == '1' ? 'selected' : '' }}>Sí</option>
                                                 <option value="0" {{ old('up_to_date') === '0' ? 'selected' : '' }}>No</option>
@@ -113,39 +115,39 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="has_water_day_night" class="form-label">¿Tiene agua día y noche?</label>
-                                            <select class="form-control" id="has_water_day_night" name="has_water_day_night" required>
+                                            <select class="form-control" id="has_water_day_night" name="has_water_day_night">
                                                 <option value="">Selecciona una opción</option>
-                                                <option value="1" {{ old('has_water_day_night') == '1' ? 'selected' : '' }}>Día si noche no</option>
-                                                <option value="0" {{ old('has_water_day_night') == '0' ? 'selected' : '' }}>Noche si día no</option>
+                                                <option value="Día sí, noche no" {{ old('has_water_day_night') == 'Día sí, noche no' ? 'selected' : '' }}>Día sí, noche no</option>
+                                                <option value="Noche sí, día no" {{ old('has_water_day_night') == 'Noche sí, día no' ? 'selected' : '' }}>Noche sí, día no</option>
                                             </select>
                                         </div>
                                     </div>                                    
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="occupants_number" class="form-label">Número de Ocupantes(*)</label>
-                                            <input type="number" class="form-control" id="occupants_number" name="occupants_number" placeholder="Ingresa número de ocupantes" value="{{ old('occupants_number') }}" required />
+                                            <label for="occupants_number" class="form-label">Número de Ocupantes</label>
+                                            <input type="number" class="form-control" id="occupants_number" name="occupants_number" placeholder="Ingresa número de ocupantes" value="{{ old('occupants_number') }}" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="water_days" class="form-label">Días de Agua(*)</label>
-                                            <input type="number" class="form-control" id="water_days" name="water_days" placeholder="Ingresa días de agua" value="{{ old('water_days') }}" required />
+                                            <label for="water_days" class="form-label">Días de Agua</label>
+                                            <input type="number" class="form-control" id="water_days" name="water_days" placeholder="Ingresa días de agua" value="{{ old('water_days') }}" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="has_water_pressure" class="form-label">¿Tiene presión de agua?</label>
-                                            <select class="form-control" id="has_water_pressure" name="has_water_pressure" required>
+                                            <select class="form-control" id="has_water_pressure" name="has_water_pressure">
                                                 <option value="">Selecciona una opción</option>
-                                                <option value="1" {{ old('has_water_pressure') === '1' ? 'selected' : '' }}>Día si noche no</option>
-                                                <option value="0" {{ old('has_water_pressure') === '0' ? 'selected' : '' }}>Noche si día no</option>
+                                                <option value="Día sí, noche no" {{ old('has_water_pressure') === 'Día sí, noche no' ? 'selected' : '' }}>Día sí, noche no</option>
+                                                <option value="Noche sí, día no" {{ old('has_water_pressure') === 'Noche sí, día no' ? 'selected' : '' }}>Noche sí, día no</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="has_cistern" class="form-label">¿Tiene cisterna?</label>
-                                            <select class="form-control" id="has_cistern" name="has_cistern" required>
+                                            <select class="form-control" id="has_cistern" name="has_cistern">
                                                 <option value="">Selecciona una opción</option>
                                                 <option value="1" {{ old('has_cistern') === '1' ? 'selected' : '' }}>Sí</option>
                                                 <option value="0" {{ old('has_cistern') === '0' ? 'selected' : '' }}>No</option>
@@ -155,7 +157,7 @@
                                     <div class="col-lg-5">
                                         <div class="form-group">
                                             <label for="cost" class="form-label">Costo</label>
-                                            <select class="form-control" name="cost_id" id="cost" required>
+                                            <select class="form-control" name="cost_id" id="cost">
                                                 <option value="">Selecciona el costo</option>
                                                 @foreach ($costs as $cost)
                                                     <option value="{{ $cost->id }}" {{ old('cost_id') == $cost->id ? 'selected' : '' }}>
@@ -167,8 +169,8 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label for="status" class="form-label">Estado del titular(*)</label>
-                                            <select class="form-control" id="status" name="status" required onchange="toggleResponsibleField()">
+                                            <label for="status" class="form-label">Estado del titular</label>
+                                            <select class="form-control" id="status" name="status"  onchange="toggleResponsibleField()">
                                                 <option value="">Selecciona una opción</option>
                                                 <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Con Vida</option>
                                                 <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Fallecido</option>

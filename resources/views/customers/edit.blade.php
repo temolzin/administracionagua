@@ -36,31 +36,31 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="nameUpdate" class="form-label">Nombre(*)</label>
-                                            <input type="text" class="form-control" name="nameUpdate" id="nameUpdate" value="{{ $customer->name }}" required>
+                                            <input type="text" class="form-control" name="nameUpdate" id="nameUpdate" placeholder="Ingresa nombre" value="{{ $customer->name }}" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="lastNameUpdate" class="form-label">Apellido(*)</label>
-                                            <input type="text" class="form-control" name="lastNameUpdate" id="lastNameUpdate" value="{{ $customer->last_name }}" required>
+                                            <input type="text" class="form-control" name="lastNameUpdate" id="lastNameUpdate"  placeholder="Ingresa apellido" value="{{ $customer->last_name }}" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="blockUpdate" class="form-label">Bloque(*)</label>
-                                            <input type="text" class="form-control" name="blockUpdate" id="blockUpdate" value="{{ $customer->block }}" required>
+                                            <label for="blockUpdate" class="form-label">Manzana(*)</label>
+                                            <input type="text" class="form-control" name="blockUpdate" id="blockUpdate"  placeholder="Ingresa la Manzana" value="{{ $customer->block }}" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="streetUpdate" class="form-label">Calle(*)</label>
-                                            <input type="text" class="form-control" name="streetUpdate" id="streetUpdate" value="{{ $customer->street }}" required>
+                                            <input type="text" class="form-control" name="streetUpdate" id="streetUpdate"  placeholder="Ingresa la calle" value="{{ $customer->street }}" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="interiorNumberUpdate" class="form-label">Número Interior(*)</label>
-                                            <input type="text" class="form-control" name="interiorNumberUpdate" id="interiorNumberUpdate" value="{{ $customer->interior_number }}" required>
+                                            <label for="interiorNumberUpdate" class="form-label">Número Interior</label>
+                                            <input type="text" class="form-control" name="interiorNumberUpdate" id="interiorNumberUpdate"  placeholder="Ingresa número interior" value="{{ $customer->interior_number }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -68,86 +68,87 @@
                                             <label for="maritalStatusUpdate" class="form-label">Estado Civil(*)</label>
                                             <select class="form-control" id="maritalStatusUpdate" name="maritalStatusUpdate" required>
                                                 <option value="">Selecciona una opción</option>
-                                                <option value="1" {{ $customer->marital_status == 1 ? 'selected' : '' }}>Casado</option>
-                                                <option value="0" {{ $customer->marital_status == 0 ? 'selected' : '' }}>Soltero</option>
+                                                <option value="Casado/a" {{ $customer->marital_status == "Casado/a" ? 'selected' : '' }}>Casado/a</option>
+                                                <option value="Soltero/a" {{ $customer->marital_status == "Soltero/a" ? 'selected' : '' }}>Soltero/a</option>
+                                                <option value="Viudo/a" {{ $customer->marital_status == "Viudo/a" ? 'selected' : '' }}>Viudo/a</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="partnerNameUpdate" class="form-label">Nombre del Pareja</label>
-                                            <input type="text" class="form-control" name="partnerNameUpdate" id="partnerNameUpdate" value="{{ $customer->partner_name }}">
+                                            <label for="partnerNameUpdate" class="form-label">Nombre de la Pareja</label>
+                                            <input type="text" class="form-control" name="partnerNameUpdate" id="partnerNameUpdate"  placeholder="Nombre de la pareja" value="{{ $customer->partner_name }}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="hasWaterConnectionUpdate" class="form-label">¿Tiene Toma de agua?</label>
-                                            <select class="form-control" id="hasWaterConnectionUpdate" name="hasWaterConnectionUpdate" required>
-                                                <option value="">Selecciona una opción</option>
+                                            <select class="form-control" id="hasWaterConnectionUpdate" name="hasWaterConnectionUpdate">
+                                                <option value="" {{ is_null($customer->has_water_connection) ? 'selected' : '' }}>Selecciona una opción</option>
                                                 <option value="1" {{ $customer->has_water_connection == 1 ? 'selected' : '' }}>Sí</option>
-                                                <option value="0" {{ $customer->has_water_connection == 0 ? 'selected' : '' }}>No</option>
-                                            </select>
+                                                <option value="0" {{ $customer->has_water_connection === 0 ? 'selected' : '' }}>No</option>
+                                            </select>                                                                                    
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="hasStoreUpdate" class="form-label">¿Tiene Local?</label>
-                                            <select class="form-control" id="hasStoreUpdate" name="hasStoreUpdate" required>
-                                                <option value="">Selecciona una opción</option>
+                                            <select class="form-control" id="hasStoreUpdate" name="hasStoreUpdate" >
+                                                <option value="" {{ is_null($customer->has_store) ? 'selected' : '' }}>Selecciona una opción</option>
                                                 <option value="1" {{ $customer->has_store == 1 ? 'selected' : '' }}>Sí</option>
-                                                <option value="0" {{ $customer->has_store == 0 ? 'selected' : '' }}>No</option>
+                                                <option value="0" {{ $customer->has_store === 0 ? 'selected' : '' }}>No</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="hasAllPaymentsUpdate" class="form-label">¿Está al día?</label>
-                                            <select class="form-control" id="hasAllPaymentsUpdate" name="hasAllPaymentsUpdate" required>
-                                                <option value="">Selecciona una opción</option>
-                                                <option value="1" {{ $customer->up_to_date == 1 ? 'selected' : '' }}>Sí</option>
-                                                <option value="0" {{ $customer->up_to_date == 0 ? 'selected' : '' }}>No</option>
+                                            <select class="form-control" id="hasAllPaymentsUpdate" name="hasAllPaymentsUpdate" >
+                                                <option value="" {{ is_null($customer->has_all_payments) ? 'selected' : '' }}>Selecciona una opción</option>
+                                                <option value="1" {{ $customer->has_all_payments == 1 ? 'selected' : '' }}>Sí</option>
+                                                <option value="0" {{ $customer->has_all_payments === 0 ? 'selected' : '' }}>No</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="hasWaterDayNightUpdate" class="form-label">¿Tiene agua día y noche?</label>
-                                            <select class="form-control" id="hasWaterDayNightUpdate" name="hasWaterDayNightUpdate" required>
+                                            <select class="form-control" id="hasWaterDayNightUpdate" name="hasWaterDayNightUpdate" >
                                                 <option value="">Selecciona una opción</option>
-                                                <option value="1" {{ $customer->has_water_day_night == 1 ? 'selected' : '' }}>Día si noche no</option>
-                                                <option value="0" {{ $customer->has_water_day_night == 0 ? 'selected' : '' }}>Noche si día no</option>
+                                                <option value="Día sí, noche no" {{ $customer->has_water_day_night == "Día sí, noche no" ? 'selected' : '' }}>Día sí, noche no</option>
+                                                <option value="Noche sí, día no" {{ $customer->has_water_day_night == "Noche sí, día no" ? 'selected' : '' }}>Noche sí, día no</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="occupantsNumberUpdate" class="form-label">Número de Ocupantes(*)</label>
-                                            <input type="number" class="form-control" name="occupantsNumberUpdate" id="occupantsNumberUpdate" value="{{ $customer->occupants_number }}" required>
+                                            <label for="occupantsNumberUpdate" class="form-label">Número de Ocupantes</label>
+                                            <input type="number" class="form-control" name="occupantsNumberUpdate" id="occupantsNumberUpdate" placeholder="Ingresa número de ocupantes"  value="{{ $customer->occupants_number }}" >
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="waterDaysUpdate" class="form-label">Días de Agua(*)</label>
-                                            <input type="number" class="form-control" name="waterDaysUpdate" id="waterDaysUpdate" value="{{ $customer->water_days }}" required>
+                                            <label for="waterDaysUpdate" class="form-label">Días de Agua</label>
+                                            <input type="number" class="form-control" name="waterDaysUpdate" id="waterDaysUpdate"  placeholder="Ingresa días de agua" value="{{ $customer->water_days }}" >
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="hasWaterPressureUpdate" class="form-label">¿Tiene presión de agua?</label>
-                                            <select class="form-control" id="hasWaterPressureUpdate" name="hasWaterPressureUpdate" required>
+                                            <select class="form-control" id="hasWaterPressureUpdate" name="hasWaterPressureUpdate" >
                                                 <option value="">Selecciona una opción</option>
-                                                <option value="1" {{ $customer->has_water_pressure == 1 ? 'selected' : '' }}>Día si noche no</option>
-                                                <option value="0" {{ $customer->has_water_pressure == 0 ? 'selected' : '' }}>Noche si día no</option>
+                                                <option value="Día sí, noche no" {{ $customer->has_water_pressure == "Día sí, noche no" ? 'selected' : '' }}>Día sí, noche no</option>
+                                                <option value="Noche sí, día no" {{ $customer->has_water_pressure == "Noche sí, día no" ? 'selected' : '' }}>Noche sí, día no</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="hasCisternUpdate" class="form-label">¿Tiene cisterna?</label>
-                                            <select class="form-control" id="hasCisternUpdate" name="hasCisternUpdate" required>
-                                                <option value="">Selecciona una opción</option>
+                                            <select class="form-control" id="hasCisternUpdate" name="hasCisternUpdate" >
+                                                <option value="" {{ is_null($customer->has_cistern) ? 'selected' : '' }}>Selecciona una opción</option>
                                                 <option value="1" {{ $customer->has_cistern == 1 ? 'selected' : '' }}>Sí</option>
-                                                <option value="0" {{ $customer->has_cistern == 0 ? 'selected' : '' }}>No</option>
+                                                <option value="0" {{ $customer->has_cistern === 0 ? 'selected' : '' }}>No</option>
                                             </select>
                                         </div>
                                     </div>
@@ -164,11 +165,11 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label for="status" class="form-label">Estado del titular(*)</label>
+                                            <label for="status" class="form-label">Estado del titular</label>
                                             <select class="form-control" id="statusUpdate" name="statusUpdate">
-                                                <option value="">Selecciona una opción</option>
+                                                <option value="" {{ is_null($customer->status) ? 'selected' : '' }}>Selecciona una opción</option>
                                                 <option value="1" {{ $customer->status == 1 ? 'selected' : '' }}>Con Vida</option>
-                                                <option value="0" {{ $customer->status == 0 ? 'selected' : '' }}>Fallecido</option>
+                                                <option value="0" {{ $customer->status === 0 ? 'selected' : '' }}>Fallecido</option>
                                             </select>
                                         </div>
                                     </div>
@@ -182,7 +183,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="observationUpdate" class="form-label">Nota</label>
-                                            <textarea class="form-control" name="observationUpdate" id="observationUpdate">{{ $customer->observation }}</textarea>
+                                            <textarea class="form-control" name="observationUpdate" id="observationUpdate"  placeholder="Ingresa nota">{{ $customer->observation }}</textarea>
                                         </div>
                                     </div>
                                 </div>

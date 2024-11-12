@@ -58,7 +58,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Estado Civil</label>
-                                        <input type="text" disabled class="form-control" value="{{ $customer->marital_status ? 'Casado' : 'Soltero' }}" />
+                                        <input type="text" disabled class="form-control" value="{{ $customer->marital_status }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-5">
@@ -70,25 +70,25 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>¿Tiene Toma de Agua?</label>
-                                        <input type="text" disabled class="form-control" value="{{ $customer->has_water_connection ? 'Sí' : 'No' }}" />
+                                        <input type="text" disabled class="form-control" value="{{ isset($customer->has_water_connection) ? ($customer->has_water_connection ? 'Sí' : 'No') : '' }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>¿Tiene Local?</label>
-                                        <input type="text" disabled class="form-control" value="{{ $customer->has_store ? 'Sí' : 'No' }}" />
+                                        <input type="text" disabled class="form-control" value="{{ isset($customer->has_store) ? ($customer->has_store ? 'Sí' : 'No') : '' }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>¿Está al Día?</label>
-                                        <input type="text" disabled class="form-control" value="{{ $customer->has_all_payments ? 'Sí' : 'No' }}" />
+                                        <input type="text" disabled class="form-control" value="{{ isset($customer->has_all_payments) ? ($customer->has_all_payments ? 'Sí' : 'No') : '' }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>¿Tiene Agua Día y Noche?</label>
-                                        <input type="text" disabled class="form-control" value="{{ $customer->has_water_day_night ? 'Día si noche no' : 'Noche si día no' }}" />
+                                        <input type="text" disabled class="form-control" value="{{ $customer->has_water_day_night }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -106,13 +106,13 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>¿Tiene Presión de Agua?</label>
-                                        <input type="text" disabled class="form-control" value="{{ $customer->has_water_pressure ? 'Día si noche no' : 'Noche si día no' }}" />
+                                        <input type="text" disabled class="form-control" value="{{ $customer->has_water_pressure }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>¿Tiene Cisterna?</label>
-                                        <input type="text" disabled class="form-control" value="{{ $customer->has_cistern ? 'Sí' : 'No' }}" />
+                                        <input type="text" disabled class="form-control" value="{{ isset($customer->has_cistern) ? ($customer->has_cistern ? 'Sí' : 'No') : '' }}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -124,7 +124,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Status</label>
-                                        <input type="text" disabled class="form-control" value="{{ $customer->status ? 'Con vida' : 'Fallecido' }}" />
+                                        <input type="text" disabled class="form-control" value="{{ isset($customer->status) ? ($customer->status ? 'Con vida' : 'Fallecido') : '' }}" />
                                     </div>
                                 </div>
                                 @if(!empty($customer->responsible_name))
