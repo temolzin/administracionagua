@@ -187,6 +187,57 @@ class PaymentController extends Controller
         return $pdf->stream('annual_earnings_' . $year . '.pdf');
     }
 
+    public function weeklyEarningsReport(Request $request)
+    {
+        $startDate = Carbon::parse($request->input('weekStartDate'));
+        $endDate = Carbon::parse($request->input('weekEndDate'));
+    
+        $weeks = [];
+        $currentStart = $startDate->copy();
+        $totalPeriodEarnings = 0;
+    
+        while ($currentStart->lte($endDate)) {
+            $currentEnd = $currentStart->copy()->endOfWeek();
+            if ($currentEnd->gt($endDate)) {
+                $currentEnd = $endDate;
+            }
+    
+            $dailyEarnings = [];
+            $dailyFolios = [];
+            $day = $currentStart->copy();
+            
+            while ($day->lte($currentEnd)) {
+                $payments = Payment::whereDate('payment_date', $day->toDateString())->get();
+                $earnings = $payments->sum('amount');
+                
+                if ($day->format('l') === 'Monday' && $payments->isNotEmpty()) {
+                    $dailyFolios['Monday'] = $payments->first()->id;
+                } elseif ($day->format('l') === 'Friday' && $payments->isNotEmpty()) {
+                    $dailyFolios['Friday'] = $payments->last()->id;
+                }
+                
+                $dailyEarnings[$day->format('l')] = $earnings;
+                $day->addDay();
+            }
+    
+            $totalPeriodEarnings += array_sum($dailyEarnings);
+    
+            $weeks[] = [
+                'start' => $currentStart->toDateString(),
+                'end' => $currentEnd->toDateString(),
+                'dailyEarnings' => $dailyEarnings,
+                'dailyFolios' => $dailyFolios,
+            ];
+    
+            $currentStart = $currentEnd->copy()->addDay();
+        }
+    
+        $pdf = PDF::loadView('reports.weeklyEarnings', compact('weeks', 'totalPeriodEarnings'))
+            ->setPaper('A4', 'portrait');
+    
+        return $pdf->stream('weekly_earnings_' . now()->format('Ymd') . '.pdf');
+    }
+
     public function receiptPayment($paymentId)
     {
         $decryptedId = Crypt::decrypt($paymentId);

@@ -45,6 +45,11 @@
             text-align: center;
         }
 
+        .foliotd {
+            text-align: center;
+            color: red;
+        }
+
         p{
             text-align: center;
             font-size: 7px;
@@ -113,7 +118,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="header">CON DOMICILIO: Calle. {{ $payment->debt->customer->street}}, # {{ $payment->debt->customer->interior_number ?? 'S/N'}}, Col. Santiago Tolman, Otumba</td>
-                    <td rowspan="2" class="header">{{ $payment->id }}</td>
+                    <td rowspan="2" class="foliotd">{{ $payment->id }}</td>
                 </tr>
                 <tr>
                     <td colspan="2" class="header">BUENO POR: $ {{ $payment->amount }}</td>

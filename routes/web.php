@@ -66,6 +66,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/users/{id}/updatePassword', [UserController::class, 'updatePassword'])->name('users.updatePassword');
 
     Route::get('/annual-earnings-report/{year}', [PaymentController::class, 'annualEarningsReport']);
+    Route::get('/weekly-earnings-report', [PaymentController::class, 'weeklyEarningsReport']) ->name('report.weeklyEarningsReport');
+
     Route::get('/report/current-customers', [CustomerController::class, 'reportCurrentCustomers'])->name('report.current-customers');
     Route::get('/customers-with-debts', [CustomerController::class, 'customersWithDebts'])->name('report.with-debts');
 

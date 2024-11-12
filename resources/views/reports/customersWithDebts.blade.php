@@ -15,7 +15,7 @@
             color: white;
             padding: 15px;
             text-align: center;
-            border-bottom: 5px solid #15304b;
+            border-bottom: 5px solid #0B1C80;
         }
         .header img {
             width: 80px;
@@ -43,7 +43,7 @@
             font-size: 11px;
         }
         th {
-            background-color: #2e4764;
+            background-color: #0B1C80;
             color: white;
         }
         .title {

@@ -43,7 +43,7 @@
             font-size: 11px;
         }
         th {
-            background-color: #2e4764;
+            background-color: #0B1C80;
             color: white;
         }
         .title {
