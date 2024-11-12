@@ -42,9 +42,9 @@ class Customer extends Model implements HasMedia
 
     public $timestamps = false;
 
-    public function Cost()
+    public function cost()
     {
-        return $this->belongsTo(Cost::class);
+        return $this->belongsTo(Cost::class, 'cost_id');
     }
    
     public function debts()
