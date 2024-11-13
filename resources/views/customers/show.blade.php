@@ -109,19 +109,25 @@
                                         <input type="text" disabled class="form-control" value="{{ $customer->has_water_pressure }}" />
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>¿Tiene Cisterna?</label>
                                         <input type="text" disabled class="form-control" value="{{ isset($customer->has_cistern) ? ($customer->has_cistern ? 'Sí' : 'No') : '' }}" />
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Costo</label>
                                         <input type="text" disabled class="form-control" value="{{ $customer->cost->category ?? 'NULL' }} - {{ $customer->cost->price ?? 'null'}}" />
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <input type="text" disabled class="form-control" value="{{ isset($customer->state) ? ($customer->state ? 'Activo' : 'Inactivo') : '' }}" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Status</label>
                                         <input type="text" disabled class="form-control" value="{{ isset($customer->status) ? ($customer->status ? 'Con vida' : 'Fallecido') : '' }}" />

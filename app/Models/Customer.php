@@ -36,6 +36,7 @@ class Customer extends Model implements HasMedia
         'has_cistern',
         'cost_id',
         'status',
+        'state',
         'observation',
         'responsible_name',
     ];

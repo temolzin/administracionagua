@@ -63,15 +63,15 @@ class DebtController extends Controller
 
         return redirect()->route('debts.index')->with('success', 'Deuda creada exitosamente.');
     }
+
     public function update(Request $request, $id)
     {
         $startMonth = $request->input('start_date');
         $endMonth = $request->input('end_date');
         $startDate = new \DateTime($startMonth . '-01');
         $endDate = (new \DateTime($endMonth . '-01'))->modify('last day of this month');
-    
+
         $customerId = $request->input('customer_id');
-    
 
         $existingDebt = Debt::where('customer_id', $customerId)
             ->where('id', '!=', $id)
@@ -80,11 +80,11 @@ class DebtController extends Controller
                       ->where('end_date', '>=', $startDate->format('Y-m-d'));
             })
             ->exists();
-    
+
         if ($existingDebt) {
             return redirect()->back()->with('error', 'El Usuario ya tiene una deuda en este rango de fechas.')->withInput();
         }
-    
+
         $debt = Debt::findOrFail($id);
         $debt->update([
             'start_date' => $startDate->format('Y-m-d'),
@@ -92,7 +92,7 @@ class DebtController extends Controller
             'amount' => $request->input('amount'),
             'note' => $request->input('note'),
         ]);
-    
+
         return redirect()->route('debts.index')->with('success', 'Deuda actualizada exitosamente.');
     }
     
@@ -112,6 +112,10 @@ class DebtController extends Controller
         $allHaveDebt = true;
 
         foreach ($customers as $customer) {
+            if ($customer->state === 0) {
+                continue;
+            }
+    
             $cost = $customer->cost;
 
             if (!$cost || !$cost->price) {
@@ -145,7 +149,7 @@ class DebtController extends Controller
 
         return redirect()->back()->with('success', 'Deudas asignadas a todos los Usuarios.');
     }
-
+  
 
     public function destroy($id, Request $request)
     {
