@@ -180,7 +180,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="status" class="form-label">Estado del titular</label>
-                                            <select class="form-control" id="status" name="status" required>
+                                            <select class="form-control" id="status" name="status"  onchange="toggleResponsibleField()" required>
                                                 <option value="">Selecciona una opción</option>
                                                 <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Con Vida</option>
                                                 <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Fallecido</option>
