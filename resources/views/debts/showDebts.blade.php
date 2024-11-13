@@ -67,6 +67,11 @@
                                                                     <i class="fas fa-eye"></i>
                                                                 </button>
                                                                 @can('deleteDebt')
+                                                                <button type="button" class="btn btn-warning btn-sm mr-2" data-toggle="modal" title="Editar Registro" data-target="#edit{{ $customerDebt->id }}">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </button>
+                                                                @endcan
+                                                                @can('deleteDebt')
                                                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" title="Eliminar Registro" data-target="#delete{{ $customerDebt->id }}">
                                                                     <i class="fas fa-trash-alt"></i>
                                                                 </button>
@@ -75,6 +80,7 @@
                                                         </div>
                                                         @include('debts.delete')
                                                         @include('debts.show')
+                                                        @include('debts.edit')
                                                     </div>
                                                 </div>
                                             </div>
