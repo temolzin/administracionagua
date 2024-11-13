@@ -71,7 +71,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/report/current-customers', [CustomerController::class, 'reportCurrentCustomers'])->name('report.current-customers');
     Route::get('/customers-with-debts', [CustomerController::class, 'customersWithDebts'])->name('report.with-debts');
 
-    Route::get('/debt-customers', [DashboardController::class, 'getDebtCustomers'])->name('debt.customers');
+    Route::get('/debt-customers/over-three-years', [DashboardController::class, 'getDebtCustomersOverThreeYears'])->name('debt.customers');
+    Route::get('/debt-customers/between-twelve-and-thirty-six-months', [DashboardController::class, 'getDebtCustomersBetweenTwelveAndThirtySixMonths'])->name('debt.customers.between_twelve_and_thirty_six');
+    Route::get('/debt-customers/between-one-and-eleven-months', [DashboardController::class, 'getDebtCustomersBetweenOneAndElevenMonths'])->name('debt.customers.between_one_and_eleven');
+
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/profile/update', [ProfileController::class, 'profileUpdate'])->name('profile.update');

@@ -99,7 +99,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($data['debtOverThreeYears'] as $key => $customer)
-                                            @if ($key < 5)
+                                            @if ($key < 2)
                                                 <tr>
                                                     <td>{{ $customer->name }}</td>
                                                     <td>{{ $customer->last_name }}</td>
@@ -113,7 +113,91 @@
                                 </table>
                             </div>
                             <div class="card-footer text-center">
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#allCustomersModal">
+                                <button type="button" class="btn btn-info" onclick="showDebtOverThreeYears()">
+                                    Ver Todos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 p-1">
+                        <div class="card card-success">
+                            <div class="card-header" style="background-color:#c1c115; color:white;">
+                                <h3 class="card-title">Clientes con Deuda de 12 a 36 Meses"</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body p-1">
+                                <table id="customersBetween12And36Months" class="table table-striped display responsive nowrap" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Apellido</th>
+                                            <th>Meses de Deuda</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($data['debtBetweenTwelveAndThirtySixMonths'] as $key => $customer)
+                                            @if ($key < 2)
+                                                <tr>
+                                                    <td>{{ $customer->name }}</td>
+                                                    <td>{{ $customer->last_name }}</td>
+                                                    <td>{{ $customer->total_months }} meses</td>
+                                                </tr>
+                                            @else
+                                                @break
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="button" class="btn btn-info" onclick="showDebtBetweenTwelveAndThirtySixMonths()">
+                                    Ver Todos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 p-1">
+                        <div class="card card-success">
+                            <div class="card-header" style="background-color:#0d7121; color:white;">
+                                <h3 class="card-title">Clientes con Deuda de 1 a 11 Meses</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body p-1">
+                                <table id="debtBetweenOneAndElevenMonths" class="table table-striped display responsive nowrap" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Apellido</th>
+                                            <th>Meses de Deuda</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($data['debtBetweenOneAndElevenMonths'] as $key => $customer)
+                                            @if ($key < 2)
+                                                <tr>
+                                                    <td>{{ $customer->name }}</td>
+                                                    <td>{{ $customer->last_name }}</td>
+                                                    <td>{{ $customer->total_months }} meses</td>
+                                                </tr>
+                                            @else
+                                                @break
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="button" class="btn btn-info" onclick="showDebtBetweenOneAndElevenMonths()">
                                     Ver Todos
                                 </button>
                             </div>
@@ -156,29 +240,35 @@
     @include('language.datatables_language')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        $('#allCustomersModal').on('show.bs.modal', function () {
+        function loadDebtCustomers(modalTitle, backgroundColor, apiUrl) {
+            $('#debtCustomersModalLabel').text(modalTitle);
+            $('#modalHeader').css('background-color', backgroundColor);
+
+            if ($.fn.DataTable.isDataTable('#debtCustomersTable')) {
+                $('#debtCustomersTable').DataTable().clear().destroy();
+            }
+
             $.ajax({
-                url: '{{ route('debt.customers') }}',
+                url: apiUrl,
                 type: 'GET',
                 success: function(response) {
-                    let tableBody = $('#customersWhitDebts tbody');
+                    let tableBody = $('#debtCustomersTable tbody');
                     tableBody.empty();
                     response.data.forEach(function(customer) {
                         tableBody.append(`
                             <tr>
-                                <td>${customer.name}</td>
-                                <td>${customer.last_name}</td>
+                                <td>${customer.id}</td>
+                                <td>${customer.name} ${customer.last_name}</td>
                                 <td>${customer.total_months} meses</td>
                             </tr>
                         `);
                     });
 
-                    $('#customersWhitDebts').DataTable({
+                    $('#debtCustomersTable').DataTable({
                         responsive: true,
                         pageLength: 10,
                         buttons: ['excel', 'pdf', 'print'],
                         dom: 'Bfrtip',
-                        destroy: true,
                         language: idiomaDataTable,
                     });
                 },
@@ -186,7 +276,33 @@
                     alert('Error al cargar los datos de clientes.');
                 }
             });
-        });
+
+            $('#debtCustomersModal').modal('show');
+        }
+
+        function showDebtOverThreeYears() {
+            loadDebtCustomers(
+                "Clientes con Deuda Mayor a 3 Años",
+                "#9b1010",
+                "{{ route('debt.customers') }}"
+            );
+        }
+
+        function showDebtBetweenTwelveAndThirtySixMonths() {
+            loadDebtCustomers(
+                "Clientes con Deuda de 12 a 36 Meses",
+                "#c9d217",
+                "{{ route('debt.customers.between_twelve_and_thirty_six') }}"
+            );
+        }
+
+        function showDebtBetweenOneAndElevenMonths() {
+            loadDebtCustomers(
+                "Clientes con Deuda de 1 a 11 Meses",
+                "#0d7121",
+                "{{ route('debt.customers.between_one_and_eleven') }}"
+            );
+        }
 
         var ctx = document.getElementById('earningsChart').getContext('2d');
         var earningsChart = new Chart(ctx, {

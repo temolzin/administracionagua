@@ -28,19 +28,48 @@ class DashboardController extends Controller
 
         $debtOverThreeYearsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
             ->join('debts', 'customers.id', '=', 'debts.customer_id')
-            ->selectRaw('SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date)) as total_months')
+            ->where('debts.status', '!=', 'paid') 
+            ->selectRaw(
+                'SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date) + IF(DAY(debts.end_date) >= DAY(debts.start_date), 1, 0)) as total_months'
+            )
             ->groupBy('customers.id', 'customers.name', 'customers.last_name')
             ->havingRaw('total_months > ?', [36])
             ->paginate(10);
 
+            $debtBetweenTwelveAndThirtySixMonthsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
+            ->join('debts', 'customers.id', '=', 'debts.customer_id')
+            ->where('debts.status', '!=', 'paid') 
+            ->selectRaw(
+                'SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date) + IF(DAY(debts.end_date) >= DAY(debts.start_date), 1, 0)) as total_months'
+            )
+            ->groupBy('customers.id', 'customers.name', 'customers.last_name')
+            ->havingRaw('total_months BETWEEN ? AND ?', [12, 36])
+            ->get();
+        
+            $debtBetweenOneAndElevenMonthsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
+                ->join('debts', 'customers.id', '=', 'debts.customer_id')
+                ->where('debts.status', '!=', 'paid') 
+                ->selectRaw(
+                    'SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date) + IF(DAY(debts.end_date) >= DAY(debts.start_date), 1, 0)) as total_months'
+                )
+                ->groupBy('customers.id', 'customers.name', 'customers.last_name')
+                ->havingRaw('total_months BETWEEN ? AND ?', [1, 11])
+                ->get();
+            
         $debtOverThreeYears = $debtOverThreeYearsAll->take(5);
+        $debtBetweenTwelveAndThirtySixMonths = $debtBetweenTwelveAndThirtySixMonthsAll->take(5);
+        $debtBetweenOneAndElevenMonths = $debtBetweenOneAndElevenMonthsAll->take(5);
 
         $currentMonth = Carbon::now();
-        $debtsThisMonth = Debt::whereYear('start_date', $currentMonth->year)
-            ->whereMonth('start_date', $currentMonth->month)
+        $startOfMonth = $currentMonth->copy()->startOfMonth();
+        $endOfMonth = $currentMonth->copy()->endOfMonth();
+        
+        $debtsThisMonth = Debt::where('start_date', '<=', $endOfMonth)
+            ->where('end_date', '>=', $startOfMonth)
             ->count();
-
+        
         $noDebtsForCurrentMonth = ($debtsThisMonth === 0);
+        
 
         $monthlyEarnings = Payment::selectRaw('SUM(amount) as total, MONTH(payment_date) as month')
             ->whereYear('payment_date', Carbon::now()->year)
@@ -64,24 +93,57 @@ class DashboardController extends Controller
             'customersWithoutDebts' => $customersWithoutDebts,
             'noDebtsForCurrentMonth' => $noDebtsForCurrentMonth,
             'debtOverThreeYears' => $debtOverThreeYears,
-            'debtOverThreeYearsAll' => $debtOverThreeYearsAll,
+            'debtBetweenTwelveAndThirtySixMonths' => $debtBetweenTwelveAndThirtySixMonths,
+            'debtBetweenOneAndElevenMonths' => $debtBetweenOneAndElevenMonths,
             'months' => $months,
             'earningsPerMonth' => array_values($earningsPerMonth),
         ];
 
         return view('dashboard', compact('data', 'authUser'));
     }
-
-    public function getDebtCustomers(Request $request)
+    public function getDebtCustomersOverThreeYears(Request $request)
     {
         $debtOverThreeYearsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
             ->join('debts', 'customers.id', '=', 'debts.customer_id')
-            ->selectRaw('SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date)) as total_months')
+            ->where('debts.status', '!=', 'paid') 
+            ->selectRaw(
+                'SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date) + IF(DAY(debts.end_date) >= DAY(debts.start_date), 1, 0)) as total_months'
+            )
             ->groupBy('customers.id', 'customers.name', 'customers.last_name')
             ->havingRaw('total_months > ?', [36])
             ->get();
-    
+        
         return response()->json(['data' => $debtOverThreeYearsAll]);
+    }
+    
+    public function getDebtCustomersBetweenTwelveAndThirtySixMonths(Request $request)
+    {
+        $debtBetweenTwelveAndThirtySixMonthsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
+            ->join('debts', 'customers.id', '=', 'debts.customer_id')
+            ->where('debts.status', '!=', 'paid') 
+            ->selectRaw(
+                'SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date) + IF(DAY(debts.end_date) >= DAY(debts.start_date), 1, 0)) as total_months'
+            )
+            ->groupBy('customers.id', 'customers.name', 'customers.last_name')
+            ->havingRaw('total_months BETWEEN ? AND ?', [12, 36])
+            ->get();
+    
+        return response()->json(['data' => $debtBetweenTwelveAndThirtySixMonthsAll]);
+    }
+    
+    public function getDebtCustomersBetweenOneAndElevenMonths(Request $request)
+    {
+        $debtBetweenOneAndElevenMonthsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
+        ->join('debts', 'customers.id', '=', 'debts.customer_id')
+        ->where('debts.status', '!=', 'paid')
+        ->selectRaw(
+            'SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date) + IF(DAY(debts.end_date) >= DAY(debts.start_date), 1, 0)) as total_months'
+        )
+        ->groupBy('customers.id', 'customers.name', 'customers.last_name')
+        ->havingRaw('total_months BETWEEN ? AND ?', [1, 11])
+        ->get();
+    
+        return response()->json(['data' => $debtBetweenOneAndElevenMonthsAll]);
     }
     
 }
