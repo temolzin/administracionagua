@@ -144,7 +144,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="has_cistern" class="form-label">¿Tiene cisterna?</label>
                                             <select class="form-control" id="has_cistern" name="has_cistern">
@@ -154,10 +154,10 @@
                                             </select>
                                         </div>
                                     </div>  
-                                    <div class="col-lg-5">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="cost" class="form-label">Costo</label>
-                                            <select class="form-control" name="cost_id" id="cost">
+                                            <select class="form-control" name="cost_id" id="cost" required>
                                                 <option value="">Selecciona el costo</option>
                                                 @foreach ($costs as $cost)
                                                     <option value="{{ $cost->id }}" {{ old('cost_id') == $cost->id ? 'selected' : '' }}>
@@ -167,10 +167,20 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Estatus</label>
+                                            <select class="form-control" id="state" name="state">
+                                                <option value="">Selecciona una opción</option>
+                                                <option value="1" {{ old('state') == '1' ? 'selected' : '' }}>Activo</option>
+                                                <option value="0" {{ old('state') === '0' ? 'selected' : '' }}>Inactivo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="status" class="form-label">Estado del titular</label>
-                                            <select class="form-control" id="status" name="status"  onchange="toggleResponsibleField()">
+                                            <select class="form-control" id="status" name="status" required>
                                                 <option value="">Selecciona una opción</option>
                                                 <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Con Vida</option>
                                                 <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Fallecido</option>

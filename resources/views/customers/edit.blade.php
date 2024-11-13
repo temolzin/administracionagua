@@ -142,7 +142,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="hasCisternUpdate" class="form-label">¿Tiene cisterna?</label>
                                             <select class="form-control" id="hasCisternUpdate" name="hasCisternUpdate" >
@@ -152,7 +152,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-5">
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="costIdUpdate" class="form-label">Costo(*)</label>
                                             <select class="form-control" id="costIdUpdate" name="costIdUpdate" required>
@@ -163,7 +163,17 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Estatus</label>
+                                            <select class="form-control" id="stateUpdate" name="stateUpdate">
+                                                <option value="" {{ is_null($customer->state) ? 'selected' : '' }}>Selecciona una opción</option>
+                                                <option value="1" {{ $customer->state == 1 ? 'selected' : '' }}>Activo</option>
+                                                <option value="0" {{ $customer->state === 0 ? 'selected' : '' }}>Inactivo</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="status" class="form-label">Estado del titular</label>
                                             <select class="form-control" id="statusUpdate" name="statusUpdate">

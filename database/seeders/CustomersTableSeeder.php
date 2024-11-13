@@ -20,7 +20,7 @@ class CustomersTableSeeder extends Seeder
 
         $costIds = DB::table('costs')->pluck('id')->toArray();
 
-        foreach (range(1, 1000) as $index) {
+        foreach (range(1, 10) as $index) {
             DB::table('customers')->insert([
                 'cost_id' => $faker->randomElement($costIds),
                 'name' => $faker->firstName,
@@ -39,6 +39,7 @@ class CustomersTableSeeder extends Seeder
                 'water_days' => $faker->numberBetween(1, 7),
                 'has_water_pressure' => $faker->randomElement(['Día sí, noche no', 'Noche sí, día no']),
                 'has_cistern' => $faker->boolean,
+                'state' => $faker->boolean,
                 'status' => $faker->boolean,
                 'observation' => $faker->text,
             ]);

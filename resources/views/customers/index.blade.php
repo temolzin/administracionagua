@@ -43,7 +43,7 @@
                                             <th>ID</th>
                                             <th>FOTO</th>
                                             <th>NOMBRE</th>
-                                            <th>TIENE TOMA</th>
+                                            <th>ESTATUS</th>
                                             <th>OPCIONES</th>
                                         </tr>
                                     </thead>
@@ -66,7 +66,14 @@
                                             @endif
                                             </td>
                                             <td>{{$customer->name}} {{$customer->last_name}}</td>
-                                            <td>{{ $customer->has_water_connection ? 'SI' : 'NO' }}</td>
+                                            <td>
+                                                @if ($customer->state === 1)
+                                                    <button class="badge badge-success">Activo</button>
+                                                @elseif ($customer->state === 0)
+                                                    <button class="badge badge-danger">Inactivo</button>
+                                                @endif
+                                            </td>
+                                            
                                             <td>
                                                 <div class="btn-group" role="group" aria-label="Opciones">
                                                     @can('viewCustomers')
