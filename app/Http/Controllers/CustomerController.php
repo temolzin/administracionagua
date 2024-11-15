@@ -14,12 +14,12 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $query = Customer::query();
-    
+
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->whereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$search}%"]);
         }
-    
+
         $customers = $query->paginate(10);
         $costs = Cost::all();
         return view('customers.index', compact('customers', 'costs'));
@@ -101,9 +101,13 @@ class CustomerController extends Controller
 
     public function reportCurrentCustomers()
     {
-        $customers = Customer::whereDoesntHave('debts', function ($query) {
-            $query->where('status', '!=', 'paid');
-        })->get();
+        $customers = Customer::where(function ($query) {
+                $query->where('state', 1)
+                      ->orWhereNull('state');
+            })
+            ->whereDoesntHave('debts', function ($query) {
+                $query->whereIn('status', ['pending', 'partial']);
+            })->get();
     
         $pdf = Pdf::loadView('reports.reportCurrentCustomers', compact('customers'));
         return $pdf->stream('reporte_clientes_al_corriente.pdf');
@@ -112,7 +116,7 @@ class CustomerController extends Controller
     public function customersWithDebts()
     {
         $customers = Customer::whereHas('debts', function ($query) {
-            $query->where('status', '!=', 'paid');
+            $query->whereNotIn('status', ['paid', 'united']);
         })->get();
 
         $pdf = Pdf::loadView('reports.customersWithDebts', compact('customers'));

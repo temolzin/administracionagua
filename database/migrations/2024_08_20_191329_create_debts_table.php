@@ -20,7 +20,7 @@ class CreateDebtsTable extends Migration
             $table->date('end_date');
             $table->decimal('amount', 10, 2);
             $table->decimal('debt_current', 8, 2)->default(0);
-            $table->enum('status', ['pending', 'partial', 'paid'])->default('pending');
+            $table->enum('status', ['pending', 'partial', 'paid','united'])->default('pending');
             $table->text('note')->nullable();
             $table->softDeletes();
         

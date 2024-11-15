@@ -27,7 +27,7 @@ class PaymentController extends Controller
         if ($request->filled('period')) {
             $periodParts = explode('/', $request->period);
             $monthName = strtolower(trim($periodParts[0]));
-            $year = trim($periodParts[1]); // Year
+            $year = trim($periodParts[1]);
 
             $months = [
                 'enero' => 1,
@@ -59,7 +59,10 @@ class PaymentController extends Controller
         }
 
         $payments = $query->paginate(10);
-        $customers = Customer::all();
+        $customers = Customer::where('state', 1)
+                     ->orWhereNull('state')
+                     ->get();
+
 
         return view('payments.index', compact('payments', 'customers'));
     }
@@ -68,7 +71,7 @@ class PaymentController extends Controller
     {
         $customerId = $request->input('customer_id');
         $debts = Debt::where('customer_id', $customerId)
-            ->where('status', '!=', 'paid')
+            ->whereNotIn('status', ['paid', 'united'])
             ->orderBy('start_date', 'asc')
             ->get()
             ->map(function ($debt) {
