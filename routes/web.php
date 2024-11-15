@@ -81,4 +81,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/profile/editImage', [ProfileController::class, 'updateImage'])->name('profile.update.image');
     Route::put('/profile/updatePassword', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 
+    Route::get('/debts/consolidate/{customer_id}', [DebtController::class, 'getPendingDebts'])->name('debts.getPendingDebts');
+    Route::post('/debts/consolidate/{customerId}', [DebtController::class, 'consolidate'])->name('debts.consolidate');
+
+
+
 });

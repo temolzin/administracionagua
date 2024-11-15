@@ -28,7 +28,7 @@ class DashboardController extends Controller
 
         $debtOverThreeYearsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
             ->join('debts', 'customers.id', '=', 'debts.customer_id')
-            ->where('debts.status', '!=', 'paid') 
+            ->whereNotIn('debts.status', ['paid', 'united'])
             ->selectRaw(
                 'SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date) + IF(DAY(debts.end_date) >= DAY(debts.start_date), 1, 0)) as total_months'
             )
@@ -38,7 +38,7 @@ class DashboardController extends Controller
 
             $debtBetweenTwelveAndThirtySixMonthsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
             ->join('debts', 'customers.id', '=', 'debts.customer_id')
-            ->where('debts.status', '!=', 'paid') 
+            ->whereNotIn('debts.status', ['paid', 'united'])
             ->selectRaw(
                 'SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date) + IF(DAY(debts.end_date) >= DAY(debts.start_date), 1, 0)) as total_months'
             )
@@ -48,7 +48,7 @@ class DashboardController extends Controller
         
             $debtBetweenOneAndElevenMonthsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
                 ->join('debts', 'customers.id', '=', 'debts.customer_id')
-                ->where('debts.status', '!=', 'paid') 
+                ->whereNotIn('debts.status', ['paid', 'united'])
                 ->selectRaw(
                     'SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date) + IF(DAY(debts.end_date) >= DAY(debts.start_date), 1, 0)) as total_months'
                 )
@@ -105,7 +105,7 @@ class DashboardController extends Controller
     {
         $debtOverThreeYearsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
             ->join('debts', 'customers.id', '=', 'debts.customer_id')
-            ->where('debts.status', '!=', 'paid') 
+            ->whereNotIn('debts.status', ['paid', 'united'])
             ->selectRaw(
                 'SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date) + IF(DAY(debts.end_date) >= DAY(debts.start_date), 1, 0)) as total_months'
             )
@@ -120,7 +120,7 @@ class DashboardController extends Controller
     {
         $debtBetweenTwelveAndThirtySixMonthsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
             ->join('debts', 'customers.id', '=', 'debts.customer_id')
-            ->where('debts.status', '!=', 'paid') 
+            ->whereNotIn('debts.status', ['paid', 'united'])
             ->selectRaw(
                 'SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date) + IF(DAY(debts.end_date) >= DAY(debts.start_date), 1, 0)) as total_months'
             )
@@ -135,7 +135,7 @@ class DashboardController extends Controller
     {
         $debtBetweenOneAndElevenMonthsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
         ->join('debts', 'customers.id', '=', 'debts.customer_id')
-        ->where('debts.status', '!=', 'paid')
+        ->whereNotIn('debts.status', ['paid', 'united'])
         ->selectRaw(
             'SUM(TIMESTAMPDIFF(MONTH, debts.start_date, debts.end_date) + IF(DAY(debts.end_date) >= DAY(debts.start_date), 1, 0)) as total_months'
         )

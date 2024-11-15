@@ -70,6 +70,7 @@
                                                 <option value="">Selecciona una opción</option>
                                                 <option value="Casado/a" {{ $customer->marital_status == "Casado/a" ? 'selected' : '' }}>Casado/a</option>
                                                 <option value="Soltero/a" {{ $customer->marital_status == "Soltero/a" ? 'selected' : '' }}>Soltero/a</option>
+                                                <option value="Divorciado/a" {{ $customer->marital_status == "Divorciado/a" ? 'selected' : '' }}>Viudo/a</option>
                                                 <option value="Viudo/a" {{ $customer->marital_status == "Viudo/a" ? 'selected' : '' }}>Viudo/a</option>
                                             </select>
                                         </div>

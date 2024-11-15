@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Debt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log; 
 
 class DebtController extends Controller
 {
@@ -22,7 +23,7 @@ class DebtController extends Controller
                     ->orWhere('last_name', 'like', "%{$search}%")
                     ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$search}%"]);
             })
-            ->where('status', '!=', 'paid')
+            ->whereNotIn('status', ['paid', 'united']) 
             ->select('customer_id')
             ->groupBy('customer_id')
             ->selectRaw('SUM(amount) as total_amount')
@@ -95,7 +96,6 @@ class DebtController extends Controller
 
         return redirect()->route('debts.index')->with('success', 'Deuda actualizada exitosamente.');
     }
-    
 
     public function assignAll(Request $request)
     {
@@ -115,7 +115,7 @@ class DebtController extends Controller
             if ($customer->state === 0) {
                 continue;
             }
-    
+
             $cost = $customer->cost;
 
             if (!$cost || !$cost->price) {
@@ -164,4 +164,54 @@ class DebtController extends Controller
         return redirect()->back()->with('success', 'Deuda eliminada con éxito.')
             ->with('modal_id', $request->input('modal_id'));
     }
+
+    public function getPendingDebts($customer_id)
+    {
+        $debts = DB::table('debts')
+            ->where('customer_id', $customer_id)
+            ->where('status', 'pending')
+            ->select('start_date', 'end_date', 'amount', 'id')
+            ->get();
+
+        return response()->json($debts);
+    }
+
+
+    public function consolidate(Request $request, $customerId)
+    {
+        DB::beginTransaction();
+    
+        try {
+            $consolidatedDebt = Debt::create([
+                'customer_id' => $customerId,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'amount' => $request->total_amount,
+                'debt_current' => $request->total_amount,
+                'status' => 'pending',
+                'note' => $request->note,
+            ]);
+    
+            Debt::where('customer_id', $customerId)
+            ->where('status', 'pending')
+            ->where('id', '!=', $consolidatedDebt->id) 
+            ->update([
+                'status' => 'united',
+                'note' => 'Esta deuda se unio a la deuda con el ID: ' . $consolidatedDebt->id,
+            ]);
+        
+    
+            DB::commit();
+    
+            return redirect()->back()->with('success', 'Deuda unida correctamente.');
+        } catch (\Exception $e) {
+    
+            DB::rollback();
+    
+            return redirect()->back()->with('error', 'Ocurrio un error al unir deuda.');
+        }
+    }
+    
+    
+    
 }

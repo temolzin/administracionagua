@@ -125,38 +125,63 @@ $(document).ready(function() {
         });
     });
     
-    $('#customer_id').change(function() {
-        var customerId = $(this).val();
-        if (customerId) {
-            $.ajax({
-                url: '{{ route("getCustomerDebts") }}',
-                type: 'GET',
-                data: { customer_id: customerId },
-                success: function(response) {
-                    $('#debt_id').empty();
-                    $('#debt_id').append('<option value="">Selecciona una deuda</option>');
-                    $.each(response.debts, function(key, value) {
-                        $('#debt_id').append('<option value="'+ value.id +'" data-remaining-amount="'+ value.remaining_amount +'">'+ value.start_date +' - '+ value.end_date +' | Monto: '+ value.amount +'</option>');
+    $('#customer_id').change(function () {
+    var customerId = $(this).val();
+    if (customerId) {
+        $.ajax({
+            url: '{{ route("getCustomerDebts") }}',
+            type: 'GET',
+            data: { customer_id: customerId },
+            success: function (response) {
+                $('#debt_id').empty();
+                $('#debt_id').append('<option value="">Selecciona una deuda</option>');
+                if (response.debts.length > 0) {
+                    var oldestDebt = response.debts.reduce(function (oldest, current) {
+                        return new Date(current.start_date) < new Date(oldest.start_date)
+                            ? current
+                            : oldest;
                     });
-                },
-                error: function(xhr) {
-                    console.log('Error:', xhr.responseText);
+
+                    response.debts.forEach(function (debt) {
+                        $('#debt_id').append(
+                            '<option value="' +
+                                debt.id +
+                                '" data-remaining-amount="' + debt.remaining_amount + '" data-start-date="' + debt.start_date +'" ' +
+                                (debt.id === oldestDebt.id ? 'data-oldest="true"' : '') +
+                                '>' + debt.start_date + ' - ' + debt.end_date +' | Monto: ' + debt.amount +
+                                '</option>'
+                        );
+                    });
                 }
-            });
+            },
+            error: function (xhr) {
+                console.log('Error:', xhr.responseText);
+            },
+        });
+    } else {
+        $('#debt_id').empty();
+        $('#debt_id').append('<option value="">Selecciona una deuda</option>');
+    }
+});
+
+    $('#debt_id').change(function () {
+        var selectedOption = $(this).find('option:selected');
+        var remainingAmount = selectedOption.data('remaining-amount');
+
+        if (remainingAmount !== undefined) {
+            $('#suggested_amount').text('Monto restante a pagar: $' + remainingAmount);
         } else {
-            $('#debt_id').empty();
-            $('#debt_id').append('<option value="">Selecciona una deuda</option>');
+            $('#suggested_amount').text('');
         }
     });
 
-    $('#debt_id').change(function() {
-        var selectedOption = $(this).find('option:selected');
-        var remainingAmount = selectedOption.data('remaining-amount');
-        
-        if (remainingAmount !== undefined) {
-            $('#suggested_amount').text('Monto sugerido a pagar: $' + remainingAmount);
-        } else {
-            $('#suggested_amount').text('');
+        $('#createPayment').on('submit', function(e) {
+        var selectedDebt = $('#debt_id').find('option:selected');
+        var isOldest = selectedDebt.data('oldest');
+
+        if (!isOldest) {
+            e.preventDefault();
+            alert('Debes pagar la deuda más antigua primero.');
         }
     });
 

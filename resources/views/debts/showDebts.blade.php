@@ -30,11 +30,16 @@
                             <hr>
                             <h5>Deudas Asociadas</h5>
 
-                            <div class="form-group">
-                                <input type="text" id="searchDebt{{ $debt->customer->id }}" class="form-control search-input" placeholder="🔍 Buscar por ID, monto, estado o fechas...">
-                            </div>
+                            <div class="form-group d-flex align-items-center">
+                                <input type="text" id="searchDebt{{ $debt->customer->id }}" class="form-control search-input mr-2" placeholder="🔍 Buscar por ID, monto, estado o fechas...">
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" title="Unir Deudas sin pagar" data-target="#consolidateDebts{{ $debt->customer->id }}">
+                                    Unir Deudas sin pagar
+                                </button>                                
+                            </div>  
+                            @include('debts.customerDebtsModal')                          
                             <div class="debt-list overflow-auto" style="max-height: 300px;">
                                 @foreach ($debt->customer->debts as $customerDebt)
+                                @if ($customerDebt->status !== 'united')
                                     <div class="debt-item card mb-3">
                                         <div class="card-body">
                                             <div class="row">
@@ -86,7 +91,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @endif
+                            @endforeach
                             </div>
                         </div>
                     </div>
@@ -126,4 +132,36 @@
             }
         });
     });
+
+    document.querySelector(`[data-target="#consolidateDebts{{ $debt->customer->id }}"]`).addEventListener('click', function() {
+    fetch(`/debts/consolidate/{{ $debt->customer->id }}`)
+        .then(response => response.json())
+        .then(debts => {
+            if (debts.length === 0) {
+                alert("No hay deudas pendientes para consolidar.");
+                return;
+            }
+
+            let earliestDate = debts[0].start_date;
+            let latestDate = debts[0].end_date;
+            let totalAmount = 0;
+            let debtList = '';
+
+            debts.forEach(debt => {
+                if (debt.start_date < earliestDate) earliestDate = debt.start_date;
+                if (debt.end_date > latestDate) latestDate = debt.end_date;
+                totalAmount += parseFloat(debt.amount);
+                debtList += `<li class="list-group-item">⭐ID: ${debt.id}, Monto: $${parseFloat(debt.amount).toFixed(2)}, Fecha Inicio: ${debt.start_date}, Fecha Fin: ${debt.end_date}</li>`;
+            });
+
+            document.getElementById(`consolidateStartDate{{ $debt->customer->id }}`).value = earliestDate;
+            document.getElementById(`consolidateEndDate{{ $debt->customer->id }}`).value = latestDate;
+            document.getElementById(`consolidateTotalAmount{{ $debt->customer->id }}`).value = `${totalAmount.toFixed(2)}`;
+            document.getElementById(`debtList{{ $debt->customer->id }}`).innerHTML = debtList;
+        })
+        .catch(error => {
+            console.error("Error al obtener deudas pendientes:", error);
+        });
+});
+
 </script>
