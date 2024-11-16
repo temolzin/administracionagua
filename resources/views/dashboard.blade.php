@@ -123,7 +123,7 @@
                     <div class="col-md-12 p-1">
                         <div class="card card-success">
                             <div class="card-header" style="background-color:#c1c115; color:white;">
-                                <h3 class="card-title">Clientes con Deuda de 12 a 36 Meses"</h3>
+                                <h3 class="card-title">Clientes con Deuda de 12 a 36 Meses</h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>

@@ -73,7 +73,7 @@
                                                                 </button>
                                                                 @can('deleteDebt')
                                                                 <button type="button" class="btn btn-warning btn-sm mr-2" data-toggle="modal" title="Editar Registro" data-target="#edit{{ $customerDebt->id }}">
-                                                                    <i class="fas fa-trash-alt"></i>
+                                                                    <i class="fas fa-edit"></i>
                                                                 </button>
                                                                 @endcan
                                                                 @can('deleteDebt')

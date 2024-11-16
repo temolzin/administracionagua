@@ -29,7 +29,7 @@
                                             <label for="customer_id" class="form-label">Usuario(*)</label>
                                             <select id="mySelect" class="form-control select2" name="customer_id" required>
                                                 <option value="">Seleccione un usuario</option>
-                                                @foreach($customers as $customer)
+                                                @foreach($customers as $customer) 
                                                     <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
                                                         {{ $customer->id }} - {{ $customer->name }} {{ $customer->last_name }} - Costo: {{ $customer->cost->price }} 
                                                     </option>

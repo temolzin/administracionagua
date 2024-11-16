@@ -118,13 +118,16 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="header">CON DOMICILIO: Calle. {{ $payment->debt->customer->street}}, # {{ $payment->debt->customer->interior_number ?? 'S/N'}}, Col. Santiago Tolman, Otumba</td>
-                    <td rowspan="2" class="foliotd">{{ $payment->id }}</td>
+                    <td rowspan="2" class="foliotd" style="font-size: 1.2em; font-weight: bold;">{{ $payment->id }}</td>
                 </tr>
                 <tr>
                     <td colspan="2" class="header">BUENO POR: $ {{ $payment->amount }}</td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="header">CANTIDAD CON LETRA POR LOS SIGUIENTES CONCEPTOS: {{ $amountInWords }}</td>
+                    <td colspan="3" class="header">
+                        CANTIDAD CON LETRA POR LOS SIGUIENTES CONCEPTOS: 
+                        <span style="font-size: 1.2em; font-weight: bold;">{{ $amountInWords }}</span>
+                    </td>                    
                 </tr> 
             </table>
         </div>

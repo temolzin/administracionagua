@@ -22,10 +22,13 @@ class DashboardController extends Controller
             $query->where('status', '!=', 'paid');
         })->count();
 
-        $customersWithoutDebts = Customer::whereDoesntHave('debts', function ($query) {
-            $query->where('status', '!=', 'paid');
-        })->count();
-
+        $customersWithoutDebts = Customer::where('state', '!=', 0)
+        ->whereDoesntHave('debts', function ($query) {
+            $query->where('status', '!=', 'paid')
+                  ->where('status', '!=', 'united');
+        })
+        ->count();
+    
         $debtOverThreeYearsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
             ->join('debts', 'customers.id', '=', 'debts.customer_id')
             ->whereNotIn('debts.status', ['paid', 'united'])

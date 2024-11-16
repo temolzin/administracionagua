@@ -5,7 +5,7 @@
                 <div class="card-header">
                     <div class="d-sm-flex align-items-center justify-content-between">
                         <h4 class="card-title">Información de la Deuda</h4>
-                        <button type="button" class="close d-sm-inline-block text-white" onclick="closeCurrentModal('#edit{{ $customerDebt->id }}')" aria-label="Close">
+                        <button type="button" class="close d-sm-inline-block text-white" onclick="closeCurrentModal('#view{{ $customerDebt->id }}')" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
