@@ -62,8 +62,8 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
             'dump' => [
-                'dump_binary_path' => 'D:\\xampp\\mysql\\bin', // Ruta donde se encuentra mysqldump
-            ],
+                'dump_binary_path' => env('DB_DUMP_BINARY_PATH', ''),
+                ],
         ],
 
         'pgsql' => [

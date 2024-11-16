@@ -54,9 +54,9 @@ return [
         ],
 
         'respaldoBD' => [
-        'driver' => 'local',
-        'root' => 'C:\\Users\\carme\\OneDrive\\Escritorio\\respaldoBD',
-    ],
+            'driver' => 'local',
+            'root' => env('RESPALDO_BD_PATH', ''),
+        ],
 
     ],
 
