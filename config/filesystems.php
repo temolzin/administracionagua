@@ -53,6 +53,11 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
 
+        'respaldoBD' => [
+            'driver' => 'local',
+            'root' => env('RESPALDO_BD_PATH', ''),
+        ],
+
     ],
 
     /*
