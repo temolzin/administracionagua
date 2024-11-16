@@ -14,7 +14,9 @@ class DebtController extends Controller
     {
         $search = $request->input('search');
 
-        $customers = Customer::all();
+        $customers = Customer::where('state', 1)
+                     ->orWhereNull('state')
+                     ->get();
 
         $debts = Debt::with('customer')
             ->whereHas('customer', function ($query) use ($search) {
@@ -160,9 +162,7 @@ class DebtController extends Controller
         }
 
         $debt->delete();
-
-        return redirect()->back()->with('success', 'Deuda eliminada con éxito.')
-            ->with('modal_id', $request->input('modal_id'));
+        return redirect()->back()->with('success', 'Deuda eliminada con éxito.');
     }
 
     public function getPendingDebts($customer_id)
@@ -170,11 +170,12 @@ class DebtController extends Controller
         $debts = DB::table('debts')
             ->where('customer_id', $customer_id)
             ->where('status', 'pending')
+            ->whereNull('deleted_at')
             ->select('start_date', 'end_date', 'amount', 'id')
             ->get();
 
         return response()->json($debts);
-    }
+    }  
 
 
     public function consolidate(Request $request, $customerId)

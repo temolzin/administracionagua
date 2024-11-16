@@ -89,13 +89,6 @@
 
 @section('js')
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var modalId = "{{ session('modal_id') }}";
-        if (modalId) {
-            $('#' + modalId).modal('show');
-        }
-    });
-
     $(document).ready(function() {
         $('#debts').DataTable({
             responsive: true,

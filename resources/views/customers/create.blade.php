@@ -114,14 +114,11 @@
                                     
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="has_water_day_night" class="form-label">¿Tiene agua día y noche?</label>
-                                            <select class="form-control" id="has_water_day_night" name="has_water_day_night">
-                                                <option value="">Selecciona una opción</option>
-                                                <option value="Día sí, noche no" {{ old('has_water_day_night') == 'Día sí, noche no' ? 'selected' : '' }}>Día sí, noche no</option>
-                                                <option value="Noche sí, día no" {{ old('has_water_day_night') == 'Noche sí, día no' ? 'selected' : '' }}>Noche sí, día no</option>
-                                            </select>
+                                            <label for="has_water_day_night" class="form-label" style="font-weight: bold;">¿Tiene agua día y noche?</label>
+                                            <input type="text" class="form-control shadow-sm" id="has_water_day_night" name="has_water_day_night" placeholder="Ejemplo: Día sí, noche no" value="{{ old('has_water_day_night') }}" >
                                         </div>
-                                    </div>                                    
+                                    </div>
+                                                                      
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="occupants_number" class="form-label">Número de Ocupantes</label>
@@ -137,13 +134,10 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="has_water_pressure" class="form-label">¿Tiene presión de agua?</label>
-                                            <select class="form-control" id="has_water_pressure" name="has_water_pressure">
-                                                <option value="">Selecciona una opción</option>
-                                                <option value="Día sí, noche no" {{ old('has_water_pressure') === 'Día sí, noche no' ? 'selected' : '' }}>Día sí, noche no</option>
-                                                <option value="Noche sí, día no" {{ old('has_water_pressure') === 'Noche sí, día no' ? 'selected' : '' }}>Noche sí, día no</option>
-                                            </select>
+                                            <input type="text" class="form-control shadow-sm" id="has_water_pressure" name="has_water_pressure" placeholder="Ejemplo: Día sí, noche no" value="{{ old('has_water_pressure') }}">
                                         </div>
                                     </div>
+                                    
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="has_cistern" class="form-label">¿Tiene cisterna?</label>
