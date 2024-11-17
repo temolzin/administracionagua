@@ -19,15 +19,13 @@ class DashboardController extends Controller
         $totalCustomers = Customer::count();
 
         $customersWithDebts = Customer::whereHas('debts', function ($query) {
-            $query->where('status', '!=', 'paid');
+            $query->whereNotIn('status', ['paid', 'united']);
         })->count();
-
+        
         $customersWithoutDebts = Customer::where('state', '!=', 0)
         ->whereDoesntHave('debts', function ($query) {
-            $query->where('status', '!=', 'paid')
-                  ->where('status', '!=', 'united');
-        })
-        ->count();
+            $query->whereNotIn('status', ['paid', 'united']);
+        })->count();
     
         $debtOverThreeYearsAll = Customer::select('customers.id', 'customers.name', 'customers.last_name')
             ->join('debts', 'customers.id', '=', 'debts.customer_id')
