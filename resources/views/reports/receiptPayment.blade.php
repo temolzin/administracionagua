@@ -95,9 +95,8 @@
 
         <div class="recibo-container">
             <table class="recibo-table">
-                
                 <tr>
-                    <td class="header">PAGO POR MES:</td>
+                    <td class="header">PAGO POR MES: ${{ $payment->debt->customer->cost->price}}</td>
                     <td class="header">MZ: {{ $payment->debt->customer->block}}</td>
                     <td class="header-cell">REGISTRO: {{ $payment->debt->customer->id}}   </td>
                 </tr>

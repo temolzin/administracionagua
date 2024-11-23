@@ -15,7 +15,7 @@
                     ¿Estás seguro de eliminar la deuda del periodo <strong>
                     {{ \Carbon\Carbon::parse($customerDebt->start_date)->locale('es')->isoFormat('D [de] MMMM [del] YYYY')}} - 
                     {{ \Carbon\Carbon::parse($customerDebt->end_date)->locale('es')->isoFormat('D [de] MMMM [del] YYYY') }}?</strong>
-                    Recuerda que si tiene pagos asociados las deuda se eliminaran.
+                    Recuerda que si tiene pagos asociados a la deuda se eliminaran.
                 </div>
                 <input type="hidden" name="modal_id" value="view{{ $debt->customer->id }}">
                 <div class="modal-footer">

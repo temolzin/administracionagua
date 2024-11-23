@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Debt;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log; 
+use Illuminate\Support\Facades\Log;
 
 class DebtController extends Controller
 {
@@ -15,8 +15,8 @@ class DebtController extends Controller
         $search = $request->input('search');
 
         $customers = Customer::where('state', 1)
-                     ->orWhereNull('state')
-                     ->get();
+            ->orWhereNull('state')
+            ->get();
 
         $debts = Debt::with('customer')
             ->whereHas('customer', function ($query) use ($search) {
@@ -25,7 +25,7 @@ class DebtController extends Controller
                     ->orWhere('last_name', 'like', "%{$search}%")
                     ->orWhereRaw("CONCAT(name, ' ', last_name) LIKE ?", ["%{$search}%"]);
             })
-            ->whereNotIn('status', ['paid', 'united']) 
+            ->whereNotIn('status', ['paid', 'united'])
             ->select('customer_id')
             ->groupBy('customer_id')
             ->selectRaw('SUM(amount) as total_amount')
@@ -78,9 +78,10 @@ class DebtController extends Controller
 
         $existingDebt = Debt::where('customer_id', $customerId)
             ->where('id', '!=', $id)
+            ->where('status', '!=', 'united')
             ->where(function ($query) use ($startDate, $endDate) {
                 $query->where('start_date', '<=', $endDate->format('Y-m-d'))
-                      ->where('end_date', '>=', $startDate->format('Y-m-d'));
+                    ->where('end_date', '>=', $startDate->format('Y-m-d'));
             })
             ->exists();
 
@@ -151,7 +152,6 @@ class DebtController extends Controller
 
         return redirect()->back()->with('success', 'Deudas asignadas a todos los Usuarios.');
     }
-  
 
     public function destroy($id, Request $request)
     {
@@ -175,13 +175,12 @@ class DebtController extends Controller
             ->get();
 
         return response()->json($debts);
-    }  
-
+    }
 
     public function consolidate(Request $request, $customerId)
     {
         DB::beginTransaction();
-    
+
         try {
             $consolidatedDebt = Debt::create([
                 'customer_id' => $customerId,
@@ -192,27 +191,24 @@ class DebtController extends Controller
                 'status' => 'pending',
                 'note' => $request->note,
             ]);
-    
+
             Debt::where('customer_id', $customerId)
-            ->where('status', 'pending')
-            ->where('id', '!=', $consolidatedDebt->id) 
-            ->update([
-                'status' => 'united',
-                'note' => 'Esta deuda se unio a la deuda con el ID: ' . $consolidatedDebt->id,
-            ]);
-        
-    
+                ->where('status', 'pending')
+                ->where('id', '!=', $consolidatedDebt->id)
+                ->update([
+                    'status' => 'united',
+                    'note' => 'Esta deuda se unio a la deuda con el ID: ' . $consolidatedDebt->id,
+                ]);
+
+
             DB::commit();
-    
+
             return redirect()->back()->with('success', 'Deuda unida correctamente.');
         } catch (\Exception $e) {
-    
+
             DB::rollback();
-    
+
             return redirect()->back()->with('error', 'Ocurrio un error al unir deuda.');
         }
     }
-    
-    
-    
 }

@@ -43,7 +43,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label for="note" class="form-label">Nota(*)</label>
+                                            <label for="note" class="form-label">Nota</label>
                                             <textarea class="form-control" name="note" id="note" placeholder="Ingresa una descripción">{{ old('note', $customerDebt->note) }}</textarea>
                                         </div>
                                     </div>
