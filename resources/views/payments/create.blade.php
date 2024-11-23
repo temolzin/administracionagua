@@ -27,8 +27,9 @@
                                     <div class="col-lg-10"></div>
                                     <div class="col-lg-2 text-right">
                                         <div class="form-group text-right">
-                                            <label for="payment_date" class="form-label">Fecha de Pago</label>
-                                            <input type="date" class="form-control" id="payment_date" name="payment_date" value="{{ date('Y-m-d') }}" />
+                                            <label for="payment_date_display" class="form-label">Fecha de Pago</label>
+                                            <input type="text" class="form-control" id="payment_date_display" value="{{ date('d-m-Y') }}" readonly />
+                                            <input type="hidden" name="payment_date" value="{{ date('Y-m-d') }}" />
                                         </div>
                                     </div>                                    
                                     <div class="col-lg-6">
