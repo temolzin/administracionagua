@@ -34,9 +34,6 @@ class DebtController extends Controller
         return view('debts.index', compact('debts', 'customers'));
     }
 
-
-
-
     public function store(Request $request)
     {
         $startMonth = $request->input('start_date');

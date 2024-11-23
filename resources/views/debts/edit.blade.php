@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="closeCurrentModal('#edit{{ $customerDebt->id }}')">Cerrar</button>
+                        <button type="button" class="btn btn-secondary">Cerrar</button>
                         <button type="submit" class="btn btn-warning">Actualizar</button>
                     </div>
                 </form>
