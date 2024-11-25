@@ -71,7 +71,7 @@
                                                                 <button type="button" class="btn btn-info btn-sm mr-2" data-toggle="modal" title="Ver Detalles" data-target="#view{{ $customerDebt->id }}">
                                                                     <i class="fas fa-eye"></i>
                                                                 </button>
-                                                                @can('deleteDebt')
+                                                                @can('editDebts')
                                                                 <button type="button" class="btn btn-warning btn-sm mr-2" data-toggle="modal" title="Editar Registro" data-target="#edit{{ $customerDebt->id }}">
                                                                     <i class="fas fa-edit"></i>
                                                                 </button>
