@@ -159,7 +159,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="state" class="form-label">Estatus</label>
-                                            <select class="form-control" id="stateUpdate" name="stateUpdate">
+                                            <select class="form-control" id="stateUpdate" name="stateUpdate" required>
                                                 <option value="" {{ is_null($customer->state) ? 'selected' : '' }}>Selecciona una opción</option>
                                                 <option value="1" {{ $customer->state == 1 ? 'selected' : '' }}>Activo</option>
                                                 <option value="0" {{ $customer->state === 0 ? 'selected' : '' }}>Inactivo</option>
@@ -169,7 +169,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="status" class="form-label">Estado del titular</label>
-                                            <select class="form-control" id="statusUpdate" name="statusUpdate">
+                                            <select class="form-control" id="statusUpdate" name="statusUpdate" required>
                                                 <option value="" {{ is_null($customer->status) ? 'selected' : '' }}>Selecciona una opción</option>
                                                 <option value="1" {{ $customer->status == 1 ? 'selected' : '' }}>Con Vida</option>
                                                 <option value="0" {{ $customer->status === 0 ? 'selected' : '' }}>Fallecido</option>

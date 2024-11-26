@@ -164,7 +164,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="state" class="form-label">Estatus</label>
-                                            <select class="form-control" id="state" name="state">
+                                            <select class="form-control" id="state" name="state" required>
                                                 <option value="">Selecciona una opción</option>
                                                 <option value="1" {{ old('state') == '1' ? 'selected' : '' }}>Activo</option>
                                                 <option value="0" {{ old('state') === '0' ? 'selected' : '' }}>Inactivo</option>
