@@ -42,6 +42,10 @@ class DebtController extends Controller
         $startDate = new \DateTime($startMonth . '-01');
         $endDate = (new \DateTime($endMonth . '-01'))->modify('last day of this month');
 
+        if ($startDate > $endDate) {
+            return redirect()->back()->with('error', 'La fecha de inicio no puede ser posterior a la fecha de fin.')->withInput();
+        }
+
         $existingDebt = Debt::where('customer_id', $request->input('customer_id'))
             ->where(function ($query) use ($startDate, $endDate) {
                 $query->where('start_date', '<=', $endDate->format('Y-m-d'))
@@ -71,14 +75,20 @@ class DebtController extends Controller
         $startDate = new \DateTime($startMonth . '-01');
         $endDate = (new \DateTime($endMonth . '-01'))->modify('last day of this month');
 
+        if ($startDate > $endDate) {
+            return redirect()->back()->with('error', 'La fecha de inicio no puede ser posterior a la fecha de fin.')->withInput();
+        }
+
         $customerId = $request->input('customer_id');
 
         $existingDebt = Debt::where('customer_id', $customerId)
             ->where('id', '!=', $id)
             ->where('status', '!=', 'united')
             ->where(function ($query) use ($startDate, $endDate) {
-                $query->where('start_date', '<=', $endDate->format('Y-m-d'))
-                    ->where('end_date', '>=', $startDate->format('Y-m-d'));
+                $query->where(function ($subQuery) use ($startDate, $endDate) {
+                    $subQuery->where('start_date', '<=', $endDate->format('Y-m-d'))
+                        ->where('end_date', '>=', $startDate->format('Y-m-d'));
+                });
             })
             ->exists();
 
@@ -105,14 +115,18 @@ class DebtController extends Controller
         $endMonth = $request->input('end_date');
 
         $startDate = new \DateTime($startMonth . '-01');
-        $endDate = (new \DateTime($endMonth . '-01'))->modify('first day of next month')->modify('-1 day');
+        $endDate = (new \DateTime($endMonth . '-01'))->modify('last day of this month');
+
+        if ($startDate > $endDate) {
+            return redirect()->back()->with('error', 'La fecha de inicio no puede ser posterior a la fecha de fin.')->withInput();
+        }
 
         $note = $request->note ?? 'Deuda asignada manualmente';
 
         $allHaveDebt = true;
 
-        foreach ($customers as $customer) {
-            if ($customer->state === 0) {
+        foreach ($customers as $customer){
+            if (empty($customer->state) || $customer->state === 0) {
                 continue;
             }
 

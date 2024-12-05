@@ -103,6 +103,11 @@
                     font-family: 'Montserrat', sans-serif;
                     font-weight: bold;
             }
+            .folio{
+                    font-size: 10pt;
+                    text-align: left;
+                    font-family: 'Montserrat', sans-serif;
+            }
 
             .title {
                 color: #03050c;
@@ -162,21 +167,22 @@
                                 @foreach ($daysInSpanish as $dayEnglish => $dayName)
                                     @php
                                         $dayEarnings = $week['dailyEarnings'][$dayEnglish] ?? 0;
-                                        $folio = $week['dailyFolios'][$dayEnglish] ?? null;
                                     @endphp
                                     <td class="textcenter">
                                         ${{ number_format($dayEarnings, 2) }}
-                                        @isset($folio)
-                                            <br><small>Folio: {{ $folio }}</small>
-                                        @endisset
                                     </td>
                                 @endforeach
                             </tr>
-                            
                             <tr>
-                                <td colspan="7" class="total_payment"><strong>Total de la semana:</strong> ${{ number_format(array_sum($week['dailyEarnings']), 2) }}</td>
+                                <td colspan="7" class="folio">
+                                    <small>Primer Folio: </small>{{ $week['dailyFolios']['first'] ?? '' }} -
+                                    <small>Último Folio: </small>{{ $week['dailyFolios']['last'] ?? '' }}
                             </tr>
-                        </tbody>
+                            <tr>
+                                <td colspan="7" class="total_payment">
+                                    <strong>Total de la semana:</strong> ${{ number_format(array_sum($week['dailyEarnings']), 2) }}</td>
+                            </tr>
+                        </tbody>                                                               
                     </table>
                 </div>
             @endforeach
