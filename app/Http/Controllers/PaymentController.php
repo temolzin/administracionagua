@@ -208,19 +208,23 @@ class PaymentController extends Controller
             $dailyEarnings = [];
             $dailyFolios = [];
             $day = $currentStart->copy();
-            
+            $weekPayments = collect();
+
             while ($day->lte($currentEnd)) {
                 $payments = Payment::whereDate('payment_date', $day->toDateString())->get();
                 $earnings = $payments->sum('amount');
-                
-                if ($day->format('l') === 'Monday' && $payments->isNotEmpty()) {
-                    $dailyFolios['Monday'] = $payments->first()->id;
-                } elseif ($day->format('l') === 'Friday' && $payments->isNotEmpty()) {
-                    $dailyFolios['Friday'] = $payments->last()->id;
-                }
-                
+
+                $weekPayments = $weekPayments->merge($payments);
+
                 $dailyEarnings[$day->format('l')] = $earnings;
                 $day->addDay();
+            }
+    
+            if ($weekPayments->isNotEmpty()) {
+                $firstPayment = $weekPayments->first();
+                $lastPayment = $weekPayments->last();
+                $dailyFolios['first'] = $firstPayment->id;
+                $dailyFolios['last'] = $lastPayment->id;
             }
     
             $totalPeriodEarnings += array_sum($dailyEarnings);

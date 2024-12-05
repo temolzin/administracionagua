@@ -131,7 +131,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="hasWaterPressureUpdate" class="form-label">¿Tiene agua día y noche?</label>
+                                            <label for="hasWaterPressureUpdate" class="form-label">¿Tiene presión de agua?</label>
                                             <input type="text" class="form-control shadow-sm" id="hasWaterPressureUpdate" name="hasWaterPressureUpdate" placeholder="Ejemplo: Día sí, noche no" value="{{ $customer->has_water_pressure }}" >
                                         </div>
                                     </div>
